@@ -6,16 +6,13 @@
 
 ## TODO
 
+- cleanup css by adding self made classname to avoid any interactions with frameworks
+- Structure cleanup with a main `GRID`
 - await/fail components for async heavy components like videos
-- Nav design
-- Nav responsive
 - landing animations
-- Vuetify integration
-- remove svg files to use cdn and find a way to use custom svg files in css
+- cleanup assets -> use fa- or icons wether it's possible instead of svg
 - Routing
 - 404
-- code cleanup
-
 ---
 
 ### Project setup
