@@ -18,8 +18,18 @@ const svgLoader = config => {
 }
 
 module.exports = {
-	chainWebpack: config => {
+    chainWebpack: config => {
 		registerAliases(aliases, config)
 		svgLoader(config)
 	},
+    pluginOptions: {
+      quasar: {
+        theme: 'mat',
+        rtlSupport: true,
+        importAll: true
+      }
+    },
+    transpileDependencies: [
+      /[\\\/]node_modules[\\\/]quasar-framework[\\\/]/
+    ]
 }
