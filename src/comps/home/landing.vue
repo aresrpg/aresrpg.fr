@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
-		<div v-if="showVideo()" class="video-container">
-			<trailer class="trailer" :sources=sources :poster=poster v-video.autoplay.muted.loop />
+		<div v-if="$q.platform.is.mobile" class="video-container">
+			<h-video class="trailer" :sources=sources :poster=poster v-video.autoplay.muted.loop />
 		</div>
 		<img :src=logo alt="AresRPG logo">
 		<div class="glassed">
@@ -37,14 +37,7 @@ export default {
 	directives,
 	components: {
 		wip,
-		trailer: () => import('@sc_cmp/sceat-videoContainer.vue'),
-	},
-	methods: {
-		showVideo: function() {
-			const ismobile = this.$root.isMobile()
-			console.log('Mobile Device =', ismobile)
-			return !ismobile
-		},
+		hVideo: () => import('@h/h-video.vue'),
 	},
 }
 </script>

@@ -3,7 +3,7 @@ const path = require('path')
 const aliases = {
 	h: 'src/hydre',
 	cmp: 'src/comps',
-	stl: 'src/stylus',
+	stl: 'src/styles',
 	v: 'src/views',
 	core: 'src/core',
 	rs: 'src/assets/resources',
