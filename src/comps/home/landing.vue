@@ -50,10 +50,10 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@require '~@sc_stl/sceat-shadows'
+@require '~@stl/sceat-shadows'
 @require '~@stl/fonts'
 @require '~@stl/colors'
-@require '~@sc_stl/sceat-shapes'
+@require '~@stl/sceat-shapes'
 
 $dotted = url('~@rs/dot.png')
 $snow = url('~@rs/snow-background.jpg')

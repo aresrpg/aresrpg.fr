@@ -1,9 +1,7 @@
 const path = require('path')
 
 const aliases = {
-	sc: 'src/lib_temp',
-	sc_stl: 'src/lib_temp/stylus',
-	sc_cmp: 'src/lib_temp/comps',
+	h: 'src/hydre',
 	cmp: 'src/comps',
 	stl: 'src/stylus',
 	v: 'src/views',

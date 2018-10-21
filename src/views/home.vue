@@ -16,6 +16,11 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
+@import '~@stl/utils'
+@import '~vuetify/src/stylus/main'
+*
+  reset()
+  disableScollBar()
 </style>
 

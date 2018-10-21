@@ -32,9 +32,9 @@ export default {
 
 <style lang="stylus" scoped>
 @require '~@stl/colors'
-@require '~@sc_stl/sceat-shapes'
-@require '~@sc_stl/sceat-gradients'
-@require '~@sc_stl/sceat-shadows'
+@require '~@stl/sceat-shapes'
+@require '~@stl/sceat-gradients'
+@require '~@stl/sceat-shadows'
 
 ease-light = cubic-bezier(.87, .06, .64, 1.35)
 

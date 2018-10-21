@@ -16,7 +16,7 @@
 </script>
 
 <style lang="stylus" scoped>
-@require '~@sc_stl/sceat-gradients'
+@require '~@stl/sceat-gradients'
 @require '~@stl/fonts'
 
 footer
