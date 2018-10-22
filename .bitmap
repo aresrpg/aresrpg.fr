@@ -12,7 +12,7 @@
         "mainFile": "src/hydre/hVideo.vue",
         "origin": "AUTHORED"
     },
-    "hydre.hydre-commons/hydre/h-dummy@1.0.0": {
+    "hydre.hydre-commons/hydre/h-dummy@1.0.2": {
         "files": [
             {
                 "relativePath": "src/hydre/hDummy.vue",

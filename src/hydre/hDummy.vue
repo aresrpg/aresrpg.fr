@@ -1,6 +1,6 @@
 <template>
-	<div class="h-container" v-bind:style="{width: w, height: h}">
-		<h1><span>Dummy Component</span><br>{{w}} : {{h}}</h1>
+	<div class="h-container" :style="{width: w, height: h}">
+		<h1><span>{{name}}</span><br>{{w}} : {{h}}</h1>
 		<div class="h-width">Width [{{dWidth}} px]</div>
 		<div class="h-height">Height [{{dHeight}} px]</div>
 	</div>
@@ -29,6 +29,7 @@ const throttle = (func, limit) => {
 
 export default {
 	props: {
+		name: {default: 'dummy'},
 		w: { default: '100%' },
 		h: { default: '100vh' },
 	},
@@ -62,12 +63,13 @@ export default {
 	grid 'name name' 1fr '. .' 2fr / 1fr 1fr
 	justify-content center
 	justify-items center
+	background-color #CFD8DC
 	align-items end
-	border .5em solid black
 	grid-gap 1em
 	padding 5%
 	text-align center
 	text-transform uppercase
+	overflow hidden
 
 	h1
 		grid-area name
