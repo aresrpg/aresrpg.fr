@@ -1,8 +1,9 @@
 <template>
   <main>
     <a-header />
-    <h-dummy h="1000px" />
     <router-view />
+    <h-dummy h="1000px" name="content" />
+    <vue-snotify />
     <a-footer />
   </main>
 </template>
@@ -18,11 +19,20 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '~@stl/utils'
-@import '~vuetify/src/stylus/main'
+@require '~@stl/utils'
+@require '~@stl/fonts'
+@require '~vue-snotify/styles/material.css'
+
+:root
+  font-size 18px
 
 *
   sc-reset()
   sc-disableScollBar()
+
+.snotifyToast__body
+  font-family $raleway
+  text-transform uppercase
+  font-size 1em
 </style>
 
