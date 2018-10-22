@@ -1,12 +1,12 @@
 <template>
-    <footer class="midnightCity">
-        <div class="container ">
-            <div class="author">
+    <footer class="sc-midnightCity">
+        <div class="sc-container">
+            <div class="sc-author">
                 footer placeholder
                 <span>by</span><br>
-                <span class="hydre">hydre</span>
+                <span class="sc-hydre">hydre</span>
                 <span>.</span>
-                <span class="io">io</span>
+                <span class="sc-io">io</span>
             </div>
         </div>
     </footer>
@@ -24,7 +24,7 @@ footer
     height 500px
     overflow hidden
 
-    .container
+    .sc-container
         width 100%
         height 100%
         background $snow, $dotted
@@ -34,7 +34,7 @@ footer
         justify-content center
         align-items center
 
-        .author
+        .sc-author
             width 60%
             text-align justify
             font-family $raleway
@@ -44,10 +44,10 @@ footer
             color crimsom
             text-transform uppercase
 
-            .hydre
+            .sc-hydre
                 font-weight 400
 
-            .io
+            .sc-io
                 font-size .7em
                 font-weight 100
                 color lightgreen

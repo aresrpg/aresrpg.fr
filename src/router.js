@@ -14,7 +14,10 @@ export default new Router({
 		{
 			path: '/',
 			name: 'home',
-			component: loadView('home'),
+			redirect: {
+				name: 'notyet',
+			},
+			// component: loadView('home'),
 		},
 		{
 			path: '/avant2022',

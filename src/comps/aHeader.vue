@@ -1,7 +1,7 @@
 <template>
     <header>
-        <div class="container deepSpace">
-            <ul class="social">
+        <div class="sc-container sc-deepSpace">
+            <ul class="sc-social">
                 <component v-for="(value,index) in datas" :key=index :is='value' />
             </ul>
         </div>
@@ -43,7 +43,7 @@ header
     position relative
     z-index 9999
 
-    .container
+    .sc-container
         position fixed
         height 20vh
         width 100%
@@ -52,7 +52,7 @@ header
         justify-content center
         align-items center
 
-    .social
+    .sc-social
         display grid
         grid-template-columns 25% 25% auto 25% 25%
         grid-template-areas 'one two space three four'
