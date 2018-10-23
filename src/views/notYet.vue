@@ -1,12 +1,13 @@
 <template>
-    <top-bar />
+<main>
+    <h-dummy name="under construct page content" h="600px"/>
+</main>
 </template>
 
 <script>
 export default {
     	components: {
-        topBar: () => import('@cmp/nav/topBar.vue'),
+            		hDummy: () => import('@h/hDummy.vue')
 	},
 }
 </script>
-

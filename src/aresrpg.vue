@@ -2,7 +2,6 @@
   <main>
     <a-header />
     <router-view />
-    <h-dummy h="1000px" name="content" />
     <vue-snotify />
     <a-footer />
   </main>
@@ -31,8 +30,9 @@ export default {
   sc-disableScollBar()
 
 .snotifyToast__body
-  font-family $raleway
+  font-family $sm
   text-transform uppercase
   font-size 1em
+  font-weight 700
 </style>
 
