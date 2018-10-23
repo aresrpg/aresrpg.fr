@@ -3,12 +3,12 @@
   "short_name": "AresRPG",
   "icons": [
     {
-        "src": "/img/icons/android-chrome-192x192.png?v=dev",
+        "src": "/img/icons/android-chrome-192x192.png?v=forced",
         "sizes": "192x192",
         "type": "image/png"
     },
     {
-        "src": "/img/icons/android-chrome-256x256.png?v=dev",
+        "src": "/img/icons/android-chrome-256x256.png?v=forced",
         "sizes": "256x256",
         "type": "image/png"
     }
