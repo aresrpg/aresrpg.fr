@@ -1,7 +1,7 @@
 <template>
-    <div class="sc-container" :class='$mq'>
-        <div class="i-forward o-reveal material-2" @click='notReady()' v-rp><i v-show="$mq==='lg'" class="fas fa-sign-in-alt i" /> login</div>
-        <div class="o-reveal material-2" @click='notReady()' v-rp>register</div>
+    <div class="sc-container material-2" :class='$mq'>
+        <div class="o-reveal" @click='notReady()' v-rp><i v-show="$mq==='lg'" class="fas fa-sign-in-alt" /> login</div>
+        <div class="o-reveal" @click='notReady()' v-rp>register</div>
     </div>
 </template>
 
@@ -9,7 +9,6 @@
 export default {
 	methods: {
 		notReady() {
-			console.log(this.$snotify)
 			this.$snotify.warning('AresRPG is not ready', {
 				timeout: 2000,
 				showProgressBar: false,
@@ -31,6 +30,8 @@ export default {
 
 bg-color = #263238
 text-color = silver
+amber = #f0a30a
+midnight = #2c3e50
 
 .sc-container
     &.sm
@@ -38,9 +39,7 @@ text-color = silver
         font-size 1.2rem
         font-weight 700
         text-transform uppercase
-        text-shadow 0px 4px 3px rgba(0, 0, 0, .4), 0px 8px 13px rgba(0, 0, 0, .1), 0px 18px 23px rgba(0, 0, 0, .1)
-        color text-color
-        background-color #263238
+        text-shadow 0px 2px 3px rgba(0, 0, 0, .4), 0px 8px 13px rgba(0, 0, 0, .1), 0px 18px 23px rgba(0, 0, 0, .1)
         width 100%
         height 100%
         display flex
@@ -53,19 +52,21 @@ text-color = silver
             flex 1 50%
 
         >:first-child
-            background-color #303F9F
-            border-right 2px solid black
+            color midnight
+            background-color amber
+            border-right 2px solid midnight
 
         >:last-child
-            background-color #1A237E
-            border-left 1px solid darken(silver,20%)
+            color amber
+            background-color midnight
+            border-left 1px solid amber
 
     &.lg
         font-family $lg
         font-size 1.2rem
         text-transform uppercase
         color text-color
-        background-color bg-color
+        background url('~@rs/loggedbar.png')
         width 100%
         height 100%
         display flex
@@ -84,23 +85,6 @@ text-color = silver
                 text-shadow 0px 0px 6px rgba(255, 255, 255, .2)
                 cursor pointer
 
-        .i-forward
-            display inline-block
-            vertical-align middle
-            transform perspective(1px) translateZ(0)
-            box-shadow 0 0 1px rgba(0, 0, 0, 0)
-            transition-duration .1s
-
-            .i
-                transform translateZ(0)
-                transition-duration .1s
-                transition-property transform
-                transition-timing-function ease-out
-
-            &:hover .i, &:focus .i, &:active .i
-                transform translateX(4px)
-                color rgba($gold-light, .5)
-
         // over animation
         .o-reveal
             display inline-block
@@ -112,7 +96,8 @@ text-color = silver
 
             &:hover
                 transition-duration 300ms
-                background-color lighten(bg-color, 10)
+                background-color darken(bg-color, 20%)
+                color $gold-light
 
             &:before
                 content ''
@@ -121,7 +106,7 @@ text-color = silver
                 left 0
                 right 0
                 top 0
-                background #BDBDBD
+                background $gold-light
                 height 4px
                 transform translateY(-4px)
                 transition-property transform
