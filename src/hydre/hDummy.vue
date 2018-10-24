@@ -1,8 +1,8 @@
 <template>
 	<div class="h-container" :style="{width: w, height: h}">
-		<h1><span>{{name}}</span><br>{{w}} : {{h}}</h1>
-		<div class="h-width">Width [{{dWidth}} px]</div>
-		<div class="h-height">Height [{{dHeight}} px]</div>
+		<h1>{{name}}</h1>
+		<div class="h-width">Width <span>{{dWidth}}</span> px</div>
+		<div class="h-height">Height <span>{{dHeight}}</span> px</div>
 	</div>
 </template>
 
@@ -29,7 +29,7 @@ const throttle = (func, limit) => {
 
 export default {
 	props: {
-		name: {default: 'dummy'},
+		name: { default: 'dummy' },
 		w: { default: '100%' },
 		h: { default: '100vh' },
 	},
@@ -56,16 +56,19 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
 .h-container
 	width 100%
 	display grid
-	grid 'name name' 1fr '. .' 2fr / 1fr 1fr
+	grid 'name name' 1fr '. .' 1fr / 1fr 1fr
+
+	@media screen and (max-width: 600px)
+		grid 'name' auto '.' max-content '.' auto / 1fr
+
 	justify-content center
 	justify-items center
 	background-color #CFD8DC
 	align-items end
-	grid-gap 1em
+	font-size 1.5rem
 	padding 5%
 	text-align center
 	text-transform uppercase
@@ -74,25 +77,30 @@ export default {
 	h1
 		grid-area name
 		line-height 1.5em
-		background-color #B0BEC5
-		color #37474F
+		background-color #212121
+		font-weight 100
+		font-size 1.5em
+		justify-self stretch
 		padding 1em
-		border 1px solid black
+		border-bottom 2px solid #1E88E5
 		box-shadow 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23)
+		color #CFD8DC
+
 	&>div
 		align-self start
-		border 1px solid black
+		font-size 1em
+		justify-self stretch
+		white-space nowrap
+		color #CFD8DC
+		span
+			color #1E88E5
+		border-top 1px solid darken(#CFD8DC, 20%)
 		padding 1em 2em
 		box-shadow 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23)
+
 	.h-width
-		justify-self end
-		color gold
-		background-color #64B5F6
-		color #0D47A1
+		background-color #212121
 
 	.h-height
-		justify-self start
-		color crimson
-		background-color #FFCC80
-		color #E65100
+		background-color #212121
 </style>
