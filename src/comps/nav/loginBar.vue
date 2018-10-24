@@ -24,14 +24,9 @@ export default {
 
 
 <style lang="stylus" scoped>
+@require '~@stl/sceat-shadows'
 @require '~@stl/fonts'
 @require '~@stl/colors'
-@require '~@stl/sceat-shadows'
-
-bg-color = #263238
-text-color = silver
-amber = #f0a30a
-midnight = #2c3e50
 
 .sc-container
     &.sm
@@ -52,20 +47,20 @@ midnight = #2c3e50
             flex 1 50%
 
         >:first-child
-            color midnight
-            background-color amber
-            border-right 2px solid midnight
+            color $color-b
+            background-color $color-a
+            border-right .6em solid $color-b
 
         >:last-child
-            color amber
-            background-color midnight
-            border-left 1px solid amber
+            color $color-a
+            background-color $color-b
+            border-left .6em solid $color-a
 
     &.lg
         font-family $lg
         font-size 1.2rem
         text-transform uppercase
-        color text-color
+        color $text
         background url('~@rs/loggedbar.png')
         width 100%
         height 100%
@@ -75,7 +70,7 @@ midnight = #2c3e50
 
         i
             font-size .8em
-            color rgba(text-color, .5)
+            color rgba($text, .5)
 
         >div
             padding .6em 1em
@@ -96,8 +91,8 @@ midnight = #2c3e50
 
             &:hover
                 transition-duration 300ms
-                background-color darken(bg-color, 20%)
-                color $gold-light
+                background-color darken($color-a, 20%)
+                color $color-b
 
             &:before
                 content ''
@@ -106,7 +101,7 @@ midnight = #2c3e50
                 left 0
                 right 0
                 top 0
-                background $gold-light
+                background $color-b
                 height 4px
                 transform translateY(-4px)
                 transition-property transform
