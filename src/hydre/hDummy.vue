@@ -1,8 +1,7 @@
 <template>
 	<div class="h-container" :style="{width: w, height: h}">
-		<h1>{{name}}</h1>
-		<div class="h-width">Width <span>{{dWidth}}</span> px</div>
-		<div class="h-height">Height <span>{{dHeight}}</span> px</div>
+		<slot>Lorem ispum</slot>
+		<div class="h-width"><span>{{dWidth}}</span> x <span>{{dHeight}}</span></div>
 	</div>
 </template>
 
@@ -29,7 +28,6 @@ const throttle = (func, limit) => {
 
 export default {
 	props: {
-		name: { default: 'dummy' },
 		w: { default: '100%' },
 		h: { default: '100vh' },
 	},
@@ -59,10 +57,10 @@ export default {
 .h-container
 	width 100%
 	display grid
-	grid 'name name' 1fr '. .' 1fr / 1fr 1fr
+	grid 'name' 1fr '.' 1fr / 1fr
 
 	@media screen and (max-width: 600px)
-		grid 'name' auto '.' max-content '.' auto / 1fr
+		grid 'name' 50% '.' max-content / 1fr
 
 	justify-content center
 	justify-items center
@@ -71,7 +69,6 @@ export default {
 	font-size 1.5rem
 	padding 5%
 	text-align center
-	text-transform uppercase
 	overflow hidden
 
 	h1
@@ -92,15 +89,11 @@ export default {
 		justify-self stretch
 		white-space nowrap
 		color #CFD8DC
+		background-color #212121
 		span
 			color #1E88E5
+
 		border-top 1px solid darken(#CFD8DC, 20%)
 		padding 1em 2em
 		box-shadow 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23)
-
-	.h-width
-		background-color #212121
-
-	.h-height
-		background-color #212121
 </style>
