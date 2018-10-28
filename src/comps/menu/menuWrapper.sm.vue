@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div ref="fantom" />
-		<v-touch ref="menu" class="swipe-container" @swipe="swipeMenu" @panmove="dragMenu" :swipe-options="swipeOptions">
+		<v-touch ref="menu" class="swipe-container" @swipe="swipeMenu" @panmove="dragMenu" :pan-options="dragOption" :swipe-options="swipeOptions">
 			<div tag="menu" ref="menuchild" v-rp.1000>
 				<slot />
 			</div>
@@ -36,14 +36,13 @@ const dragTranlate = (el, offset) => {
 	})
 }
 
-const factor = 1.5
-let offset = -window.innerWidth,
+let offset = 0,
 	lastX = -window.innerWidth
 
 const dragMenu = (el, child, deltaX) => {
 	const x = deltaX
 	const scrollableWidth = -child.offsetWidth
-	const diff = (x - lastX) / factor
+	const diff = x - lastX
 	offset += diff
 	if (offset > 0) offset = 0
 	if (offset < scrollableWidth) offset = scrollableWidth
@@ -57,6 +56,7 @@ export default {
 		return {
 			openned: false,
 			swipeOptions: { direction: 'horizontal', threshold: 50 },
+			dragOption: { direction: 'horizontal', threshold: 100 },
 		}
 	},
 	methods: {
