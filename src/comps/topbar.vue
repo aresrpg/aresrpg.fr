@@ -1,23 +1,45 @@
 <template>
-    <div class="sc-container material-2" :class='$mq'>
-        <div class="o-reveal" @click='notReady()' v-rp><i v-show="$mq==='lg'" class="fas fa-sign-in-alt" /> login</div>
-        <div class="o-reveal" @click='notReady()' v-rp>register</div>
+    <div ref="container" class="container material-2" :class='$mq'>
+        <div class="o-reveal" @click="notReady" v-rp><i v-show="$mq==='lg'" class="fas fa-sign-in-alt" /> login</div>
+        <div class="o-reveal" @click="notReady" v-rp>register</div>
     </div>
 </template>
 
 <script>
+import anime from 'animejs'
+import { NOT_READY } from '@core/notification'
+
+const factor = 1.5,
+	hidden = 0.85
+let offset = 0,
+	lastY = 0
+
+const smoothTranslate = (el, offset) =>
+	anime({
+		targets: el,
+		translateY: -offset,
+		duration: 0,
+	})
+const smoothHide = el => {
+	offset = Math.max(0, Math.min(offset + (window.scrollY - lastY) / factor, el.offsetHeight * hidden))
+	lastY = window.scrollY
+	smoothTranslate(el, offset)
+}
+
 export default {
 	methods: {
 		notReady() {
-			this.$snotify.warning('AresRPG is not ready', {
-				timeout: 2000,
-				showProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: false,
-				backdrop: 0.4,
-				position: 'centerTop',
-			})
+			this.$snotify.warning(NOT_READY.text, NOT_READY.options)
 		},
+		onScroll() {
+			smoothHide(this.$refs.container)
+		},
+	},
+	mounted() {
+		window.addEventListener('scroll', this.onScroll)
+	},
+	beforeDestroy() {
+		window.removeEventListener('scroll', this.onScroll)
 	},
 }
 </script>
@@ -28,7 +50,7 @@ export default {
 @require '~@stl/fonts'
 @require '~@stl/colors'
 
-.sc-container
+.container
     &.sm
         font-family $sm
         font-size 1.2rem
@@ -36,10 +58,13 @@ export default {
         text-transform uppercase
         text-shadow 0px 2px 3px rgba(0, 0, 0, .4), 0px 8px 13px rgba(0, 0, 0, .1), 0px 18px 23px rgba(0, 0, 0, .1)
         width 100%
-        height 100%
         display flex
         flex-flow row wrap
         align-items center
+        position fixed
+        top 0
+        z-index 2
+        min-width 150px
 
         >div
             padding 1em 0

@@ -22,7 +22,7 @@ export default new Router({
 		{
 			path: '/avant2022',
 			name: 'notyet',
-			component: loadView('notYet'),
+			component: loadView('underConstruction'),
 		},
 		{
 			path: '*',

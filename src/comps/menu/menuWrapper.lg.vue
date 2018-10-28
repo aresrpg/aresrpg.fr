@@ -1,16 +1,13 @@
 <template>
-	<main>
-		<h-dummy class="dummy" h="600px">
-			<h1>Under Construction</h1>
-		</h-dummy>
-	</main>
+    <h-dummy class="dummy" h="50px"><h1>MENU BAR</h1>   
+    </h-dummy>
 </template>
 
 <script>
 export default {
-	components: {
+    components: {
 		hDummy: () => import('@h/hDummy.vue'),
-	},
+	}
 }
 </script>
 

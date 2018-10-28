@@ -3,12 +3,13 @@ import App from '@/aresrpg.vue'
 import router from './router'
 import Snotify from 'vue-snotify'
 import VueMq from 'vue-mq'
-import Ripple from 'vue-ripple-directive';
-
+import Ripple from 'vue-ripple-directive'
+import VueTouch from 'vue-touch'
 import './registerServiceWorker'
 
 Vue.config.productionTip = false
 Vue.directive('rp', Ripple)
+Vue.use(VueTouch)
 Vue.use(Snotify, {
 	toast: {
 		maxOnScreen: 1,
