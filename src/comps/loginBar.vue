@@ -1,41 +1,40 @@
 <template>
-    <div ref="container" class="container material-2" :class='$mq'>
-        <div class="o-reveal" @click="notReady" v-rp><i v-show="$mq==='lg'" class="fas fa-sign-in-alt" /> login</div>
-        <div class="o-reveal" @click="notReady" v-rp>register</div>
+    <div class="login">
+        <div ref="container" class="container" :class='$mq' :style="`transform: translateY(${-offset}px)`">
+            <div class="o-reveal" @click="modal = true" v-rp><i v-show="$mq==='lg'" class="fas fa-sign-in-alt" /> login</div>
+            <div class="o-reveal" @click="modal = true" v-rp>register</div>
+        </div>
+        <not-ready-modal v-if="modal" @close="modal = false" />
     </div>
 </template>
 
 <script>
-import anime from 'animejs'
-import { NOT_READY } from '@core/notification'
-
-const factor = 1.5,
-	hidden = 0.85
-let offset = 0,
-	lastY = 0
-
-const smoothTranslate = (el, offset) =>
-	anime({
-		targets: el,
-		translateY: -offset,
-		duration: 0,
-	})
-const smoothHide = el => {
-	offset = Math.max(0, Math.min(offset + (window.scrollY - lastY) / factor, el.offsetHeight * hidden))
-	lastY = window.scrollY
-	smoothTranslate(el, offset)
-}
+const FACTOR = 2
+const HIDDEN = 0.85
 
 export default {
+	data() {
+		return {
+			offset: 0,
+			modal: false,
+		}
+	},
 	methods: {
-		notReady() {
-			this.$snotify.warning(NOT_READY.text, NOT_READY.options)
-		},
 		onScroll() {
-			smoothHide(this.$refs.container)
+			const deltaY = window.pageYOffset - this.lastY
+			const height = this.$refs.container.offsetHeight * HIDDEN
+
+			this.offset += deltaY / FACTOR
+			if (this.offset > height) this.offset = height
+			if (this.offset < 0) this.offset = 0
+			this.lastY = window.pageYOffset
 		},
 	},
+	components: {
+		notReadyModal: () => import('@cmp/modals/notReady.modal.vue'),
+	},
 	mounted() {
+		this.lastY = window.pageYOffset
 		window.addEventListener('scroll', this.onScroll)
 	},
 	beforeDestroy() {
@@ -46,15 +45,16 @@ export default {
 
 
 <style lang="stylus" scoped>
-@require '~@stl/sceat-shadows'
+@require '~@stl/material'
 @require '~@stl/fonts'
-@require '~@stl/colors'
+@require '~@stl/palette'
 
 .container
+    material(2)
+
     &.sm
-        font-family $sm
-        font-size 1.2rem
-        font-weight 700
+        smFont(2)
+        font-size .9rem
         text-transform uppercase
         text-shadow 0px 2px 3px rgba(0, 0, 0, .4), 0px 8px 13px rgba(0, 0, 0, .1), 0px 18px 23px rgba(0, 0, 0, .1)
         width 100%
@@ -72,20 +72,20 @@ export default {
             flex 1 50%
 
         >:first-child
-            color $color-b
-            background-color $color-a
-            border-right .6em solid $color-b
+            color palette(2)
+            background-color palette(1)
+            border-right .6em solid palette(2)
 
         >:last-child
-            color $color-a
-            background-color $color-b
-            border-left .6em solid $color-a
+            color palette(1)
+            background-color palette(2)
+            border-left .6em solid palette(1)
 
     &.lg
         font-family $lg
         font-size 1.2rem
         text-transform uppercase
-        color $text
+        color lighten(palette(2), 20%)
         background url('~@rs/loggedbar.png')
         width 100%
         height 100%
@@ -95,7 +95,7 @@ export default {
 
         i
             font-size .8em
-            color rgba($text, .5)
+            color rgba(lighten(palette(2), 20%), .5)
 
         >div
             padding .6em 1em
@@ -116,8 +116,8 @@ export default {
 
             &:hover
                 transition-duration 300ms
-                background-color darken($color-a, 20%)
-                color $color-b
+                background-color darken(palette(1), 20%)
+                color palette(2)
 
             &:before
                 content ''
@@ -126,7 +126,7 @@ export default {
                 left 0
                 right 0
                 top 0
-                background $color-b
+                background palette(2)
                 height 4px
                 transform translateY(-4px)
                 transition-property transform

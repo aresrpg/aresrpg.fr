@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:100,300,600,900|Nunito:300,400,700,900')
+@import url('https://fonts.googleapis.com/css?family=Raleway:200,400,700|Roboto:300,700')
 
-$lg = 'Raleway', sans-serif
-$sm = 'Nunito', sans-serif
+smFont(x)
+    font-family 'Roboto', sans-serif
+    font-weight x == 2 ? 700 : 300
+
+lgFont(x)
+    font-family 'Raleway', sans-serif
+    font-weight x == 1 ? 200 : (((x == 2 ? 400 : 700)))

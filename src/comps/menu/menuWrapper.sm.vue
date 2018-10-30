@@ -1,111 +1,118 @@
 <template>
-	<div class="container">
-		<div ref="fantom" />
-		<v-touch ref="menu" class="swipe-container" @swipe="swipeMenu" @panmove="dragMenu" :pan-options="dragOption" :swipe-options="swipeOptions">
-			<div tag="menu" ref="menuchild" v-rp.1000>
+	<div class="container" :class="{ animate: !dragging }">
+		<div class="fantom" ref="fantom" :style="fantom" />
+		<nav class="menu" ref="menu" :style="`transform: translateX(${menuOffset}%)`">
+			<div class="inner" v-rp.1000>
 				<slot />
 			</div>
-		</v-touch>
+		</nav>
 	</div>
 </template>
 
 <script>
-import anime from 'animejs'
+import { touchListen, touchRemove } from '@core/touch'
 
-const darken = (el, openned) =>
-	anime({
-		targets: el,
-		opacity: openned ? 0.7 : 0,
-		duration: 400,
-	})
-
-const swipeTranlate = (el, openned) => {
-	anime({
-		targets: el,
-		translateX: openned ? ['-100vw', '0vw'] : '-100vw',
-		duration: 300,
-		easing: 'easeInOutSine',
-	})
-}
-
-const dragTranlate = (el, offset) => {
-	anime({
-		targets: el,
-		translateX: offset,
-		duration: 0,
-	})
-}
-
-let offset = 0,
-	lastX = -window.innerWidth
-
-const dragMenu = (el, child, deltaX) => {
-	const x = deltaX
-	const scrollableWidth = -child.offsetWidth
-	const diff = x - lastX
-	offset += diff
-	if (offset > 0) offset = 0
-	if (offset < scrollableWidth) offset = scrollableWidth
-	lastX = x
-	console.log(offset)
-	dragTranlate(el, offset)
-}
+const VELOCITY = 0.2
 
 export default {
 	data() {
 		return {
-			openned: false,
-			swipeOptions: { direction: 'horizontal', threshold: 50 },
-			dragOption: { direction: 'horizontal', threshold: 100 },
+			menuOffset: -100,
+			dragging: false,
 		}
 	},
+	computed: {
+		fantom() {
+			return {
+				opacity: ((100 + this.menuOffset) / 100) * 0.8,
+			}
+		},
+	},
 	methods: {
-		swipeMenu({ deltaX }) {
-			const open = deltaX > 0
-			if ((open && this.openned) || (!open && !this.openned)) return
-			darken(this.$refs.fantom.$el, open)
-			swipeTranlate(this.$refs.menu.$el, open)
-			this.openned = open
+		onTouchStart({ touches: [{ pageX: x }] }) {
+			if (this.opened || x < 0.3 * window.innerWidth) {
+				this.$root.lockScroll(this.$refs.menu)
+				this.dragging = true
+				this.lastX = x
+				this.startX = x
+				this.startTime = Date.now()
+			}
 		},
-		dragMenu({ deltaX }) {
-			dragMenu(this.$refs.menu.$el, this.$refs.menuchild, deltaX)
+		onTouchMove({ touches: [{ pageX: x }] }) {
+			if (this.dragging) {
+				const deltaX = x - this.lastX
+				const width = this.$refs.menu.offsetWidth
+
+				this.menuOffset += (deltaX / width) * 100
+				this.menuOffset = Math.min(0, Math.max(this.menuOffset, -100))
+
+				this.lastX = x
+			}
 		},
+		onTouchEnd() {
+			if (this.dragging) {
+				const velocity = (this.lastX - this.startX) / (Date.now() - this.startTime)
+
+				if (Math.abs(velocity) >= VELOCITY) {
+					this.opened = !this.opened
+				} else {
+					this.opened = this.menuOffset > -50
+				}
+				this.menuOffset = this.opened ? 0 : -100
+				this.$root.unlockScroll(this.$refs.menu)
+			}
+			this.dragging = false
+		},
+		registerEvents(val) {
+			if (val) touchListen(this.onTouchStart, this.onTouchMove, this.onTouchEnd)
+			else touchRemove(this.onTouchStart, this.onTouchMove, this.onTouchEnd)
+		},
+	},
+	mounted() {
+		const ctx = this
+		this.opened = false
+		this.$root.$on('modal', modal => ctx.registerEvents(!modal)) // if a modal is openned then whe prevent menu from being interracted with
+		this.registerEvents(true)
+	},
+	beforeDestroy() {
+		this.registerEvents(false)
 	},
 }
 </script>
 
 
 <style lang="stylus" scoped>
-@require '~@stl/colors'
-
-absolute()
-	position absolute
-	top 0
-	left 0
-	bottom 0
-	right 0
+@require '~@stl/palette'
 
 .container
 	width 100%
 	position relative
 	z-index 3
 
-	&>:first-child // fantom
-		width 100%
-		absolute()
-		background black
-		opacity 0
+	&.animate
+		&>:first-child
+			transition opacity 200ms linear
 
-	.swipe-container // menu
-		width 106vw
+		.menu
+			transition transform 200ms linear
+
+	.fantom // fantom
+		width 100vw
 		height 100vh
 		position fixed
-		border 1px solid crimson
-		transform translateX(-100vw)
+		top 0
+		left 0
+		background black
+		pointer-events none
 
-		&>:first-child
-			width 100vw
+	.menu // menu
+		width 100vw
+		height 100vh
+		position fixed
+		background lighten(palette(2), 10%)
+
+		.inner
 			height 100%
-			background lighten($color-b, 10%)
+			width 100%
 </style>
 

@@ -15,5 +15,5 @@ export default {
 @require '~@stl/fonts'
 
 .dummy
-	font-family $sm
+	smFont(1)
 </style>

@@ -15,24 +15,22 @@
 </template>
 
 <script>
-import logo from '@svg/logo.svg'
-
 export default {
 	components: {
-		logo,
+		logo: ()=> import('@svg/logo.svg')
 	},
 }
 </script>
 
 <style lang="stylus" scoped>
-@require '~@stl/colors'
+@require '~@stl/palette'
 
 .sm
     li
         list-style none
 
     .ares
-        fill $color-a
+        fill palette(1)
         transform scale(.7)
 </style>
 

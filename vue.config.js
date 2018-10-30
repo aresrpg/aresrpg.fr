@@ -4,6 +4,7 @@ const aliases = {
 	h: 'src/hydre',
 	cmp: 'src/comps',
 	stl: 'src/styles',
+	anim: 'src/styles/animations',
 	v: 'src/views',
 	core: 'src/core',
 	rs: 'src/assets/resources',
@@ -24,5 +25,8 @@ module.exports = {
 	},
 	pwa: {
 		themeColor: "#263238",
-	  }
+	},
+	devServer: {
+    	disableHostCheck: true
+  	}
 }

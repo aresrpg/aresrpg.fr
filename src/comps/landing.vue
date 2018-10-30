@@ -45,7 +45,7 @@ export default {
 <style lang="stylus" scoped>
 @require '~@stl/sceat-shadows'
 @require '~@stl/fonts'
-@require '~@stl/colors'
+@require '~@stl/palette'
 @require '~@stl/sceat-shapes'
 
 $dotted = url('~@rs/dot.png')

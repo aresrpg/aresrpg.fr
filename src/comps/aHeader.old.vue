@@ -11,7 +11,7 @@ export default {
 
 
 <style lang="stylus" scoped>
-@require '~@stl/colors'
+@require '~@stl/palette'
 @require '~@stl/sceat-shapes'
 @require '~@stl/sceat-gradients'
 @require '~@stl/sceat-shadows'
