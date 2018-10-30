@@ -16,8 +16,6 @@
 
 <script>
 import { applyAttributes } from '@core/directives'
-import logo from '@rs/logo.png'
-import wip from '@svg/wip.svg'
 import mp4T from '@rs/trailer.mp4'
 import webmT from '@rs/trailer.webm'
 import poster from '@rs/snow-background.jpg'
@@ -36,21 +34,20 @@ export default {
 	data: () => datas,
 	directives,
 	components: {
-		wip,
-		hVideo: () => import('@h/h-video.vue'),
+		hVideo: () => import('@h/hVideo.vue'),
 	},
 }
 </script>
 
 <style lang="stylus" scoped>
-@require '~@stl/sceat-shadows'
+@require '~@stl/material'
 @require '~@stl/fonts'
 @require '~@stl/palette'
 @require '~@stl/sceat-shapes'
 
 $dotted = url('~@rs/dot.png')
 $snow = url('~@rs/snow-background.jpg')
-$low-fi = rgba($midnight, .4)
+$low-fi = rgba(green, .4)
 
 .container
 	display flex

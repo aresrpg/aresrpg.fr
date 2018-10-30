@@ -13,14 +13,8 @@
 <script>
 import iconModal from '@cmp/modals/icon.modal.vue'
 export default {
-	data() {
-		return {
-			modalOut: false,
-		}
-	},
 	methods: {
 		close() {
-			this.modalOut = true
 			const ctx = this
 			setTimeout(() => ctx.$emit('close'), 500)
 		},

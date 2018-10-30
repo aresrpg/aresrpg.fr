@@ -6,12 +6,9 @@
 
 ## TODO
 
-- cleanup css by adding self made classname to avoid any interactions with frameworks
-- Structure cleanup with a main `GRID`
-- await/fail components for async heavy components like videos
-- landing animations
-- cleanup assets -> use fa- or icons wether it's possible instead of svg
-- Routing
+
+- landing
+- error component
 - 404
 ---
 

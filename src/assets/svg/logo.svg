@@ -1,11 +1,6 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="260.000000pt" height="260.000000pt" viewBox="0 0 260.000000 260.000000"
- preserveAspectRatio="xMidYMid meet">
-<g transform="translate(0.000000,260.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+<svg width="260" height="260" viewBox="0 0 260 260" preserveAspectRatio="xMidYMid meet">
+<g transform="translate(0.000000,260.000000) scale(0.100000,-0.100000)" fill="none"
+ fill-rule="evenodd" stroke-width="20pt" stroke="currentColor" class="ares-logo">
 <path d="M1249 2487 c-19 -13 -81 -45 -139 -72 -155 -72 -430 -262 -430 -297
 0 -5 -13 -22 -29 -38 -21 -22 -30 -44 -35 -83 -18 -144 -41 -277 -49 -277 -5
 0 -6 -13 -2 -30 4 -16 3 -35 -1 -42 -11 -17 -12 -122 -3 -224 7 -78 43 -253

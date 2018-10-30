@@ -15,6 +15,14 @@ Vue.use(VueMq, {
 	},
 })
 
+window.loadComponent = name => ({
+	component: import(`@cmp/${name}.vue`),
+	loading: () => import('@cmp/loading.vue'),
+	error: () => import('@cmp/loading.vue'), // TODO
+	delay: 200,
+	timeout: 5000, // TODO
+})
+
 new Vue({
 	router,
 	methods: {

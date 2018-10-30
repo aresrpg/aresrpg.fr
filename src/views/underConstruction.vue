@@ -1,6 +1,5 @@
 <template>
 	<div class="main">
-
 		<login-bar title="login or register" @notready="()=>showModal(true)" />
 
 		<!-- app menu -->
@@ -34,13 +33,12 @@ export default {
 		}
 	},
 	components: {
-		loginBar: () => import('@cmp/loginBar.vue'),
-		mobileMenu: () => import('@cmp/menu/menuWrapper.sm.vue'),
-		desktopMenu: () => import('@cmp/menu/menuWrapper.lg.vue'),
-		menuContent: () => import('@cmp/menu/menuContent.vue'),
-		hDummy: () => import('@h/hDummy.vue'),
-		aFooter: () => import('@cmp/aFooter.vue'),
-		loading: () => import('@cmp/loading.vue'),
+		loginBar: () => loadComponent('loginBar'),
+		mobileMenu: () => loadComponent('menu/menuWrapper.sm'),
+		desktopMenu: () => loadComponent('menu/menuWrapper.lg'),
+		menuContent: () => loadComponent('menu/menuContent'),
+		hDummy: () => import('@h/hDummy'),
+		aFooter: () => loadComponent('aFooter'),
 	},
 	methods: {
 		showModal(show) {
@@ -54,5 +52,5 @@ export default {
 @require '~@stl/fonts'
 
 .dummy
-	smFont(1) 
+	smFont(1)
 </style>

@@ -1,14 +1,25 @@
 <template>
     <div class="login">
         <div ref="container" class="container" :class='$mq' :style="`transform: translateY(${-offset}px)`">
-            <div class="o-reveal" @click="modal = true" v-rp><i v-show="$mq==='lg'" class="fas fa-sign-in-alt" /> login</div>
-            <div class="o-reveal" @click="modal = true" v-rp>register</div>
+            <div class="o-reveal" v-rp>
+                <i v-show="$mq==='lg'" class="fas fa-sign-in-alt" />
+                <div class="icon" @click="openMenu">
+                    <i class="fas fa-bars" />
+                    <div class="divider" />
+                </div>
+                <span @click="modal = true">login</span>
+            </div>
+            <div class="o-reveal" @click="modal = true" v-rp>
+                <span>register</span>
+            </div>
         </div>
         <not-ready-modal v-if="modal" @close="modal = false" />
     </div>
 </template>
 
 <script>
+import { FORCE_MENU } from '@core/events'
+
 const FACTOR = 2
 const HIDDEN = 0.85
 
@@ -29,9 +40,12 @@ export default {
 			if (this.offset < 0) this.offset = 0
 			this.lastY = window.pageYOffset
 		},
+		openMenu() {
+			this.$root.$emit(FORCE_MENU, true)
+		},
 	},
 	components: {
-		notReadyModal: () => import('@cmp/modals/notReady.modal.vue'),
+		notReadyModal: () => loadComponent('modals/notReady.modal'),
 	},
 	mounted() {
 		this.lastY = window.pageYOffset
@@ -58,27 +72,50 @@ export default {
         text-transform uppercase
         text-shadow 0px 2px 3px rgba(0, 0, 0, .4), 0px 8px 13px rgba(0, 0, 0, .1), 0px 18px 23px rgba(0, 0, 0, .1)
         width 100%
+        height 50px
         display flex
-        flex-flow row wrap
+        flex-flow row nowrap
         align-items center
         position fixed
         top 0
         z-index 2
         min-width 150px
+        overflow hidden
 
         >div
-            padding 1em 0
             text-align center
             flex 1 50%
+            padding 1em 0
 
         >:first-child
             color palette(2)
             background-color palette(1)
+            background linear-gradient(to right, lighten(palette(1), 20%), palette(1))
             border-right .6em solid palette(2)
+            display flex
+            align-items center
 
-        >:last-child
+            span
+                flex 1 1 70%
+                transform translateX(-9%)
+
+            .icon
+                display flex
+                justify-content space-evenly
+                align-items center
+                width 100%
+                flex .4 0 30%
+
+                .divider
+                    width 1px
+                    height 34px
+                    align-self center
+                    border-right 1px solid rgba(white, .4)
+
+        >:last-child // register
             color palette(1)
             background-color palette(2)
+            background linear-gradient(to right, lighten(palette(2), 20%), palette(2))
             border-left .6em solid palette(1)
 
     &.lg

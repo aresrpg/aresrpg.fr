@@ -11,8 +11,13 @@
 
 <script>
 import { touchListen, touchRemove } from '@core/touch'
+import { LOCK_MENU, FORCE_MENU, MENU_OPENNED } from '@core/events'
 
 const VELOCITY = 0.2
+
+const isSwiping = velocity => Math.abs(velocity) >= VELOCITY
+const isSwipingLeft = velocity => isSwiping(velocity) && velocity < 0
+const isSwipingRight = velocity => isSwiping(velocity) && velocity > 0
 
 export default {
 	data() {
@@ -41,27 +46,26 @@ export default {
 		onTouchMove({ touches: [{ pageX: x }] }) {
 			if (this.dragging) {
 				const deltaX = x - this.lastX
-				const width = this.$refs.menu.offsetWidth
-
-				this.menuOffset += (deltaX / width) * 100
+				const menuWidth = this.$refs.menu.offsetWidth
+				this.menuOffset += (deltaX / menuWidth) * 100
 				this.menuOffset = Math.min(0, Math.max(this.menuOffset, -100))
-
 				this.lastX = x
 			}
 		},
 		onTouchEnd() {
 			if (this.dragging) {
 				const velocity = (this.lastX - this.startX) / (Date.now() - this.startTime)
-
-				if (Math.abs(velocity) >= VELOCITY) {
-					this.opened = !this.opened
-				} else {
-					this.opened = this.menuOffset > -50
-				}
-				this.menuOffset = this.opened ? 0 : -100
-				this.$root.unlockScroll(this.$refs.menu)
+				if (isSwipingLeft(velocity) && this.opened) this.openMenu(false)
+				else if (isSwipingRight(velocity) && !this.opened) this.openMenu(true)
+				else this.openMenu(this.menuOffset > -50)
 			}
 			this.dragging = false
+		},
+		openMenu(open) {
+			this.opened = open
+			this.menuOffset = open ? 0 : -100
+			if (!open) this.$root.unlockScroll(this.$refs.menu)
+			this.$root.$emit(MENU_OPENNED, open)
 		},
 		registerEvents(val) {
 			if (val) touchListen(this.onTouchStart, this.onTouchMove, this.onTouchEnd)
@@ -71,7 +75,8 @@ export default {
 	mounted() {
 		const ctx = this
 		this.opened = false
-		this.$root.$on('modal', modal => ctx.registerEvents(!modal)) // if a modal is openned then whe prevent menu from being interracted with
+		this.$root.$on(LOCK_MENU, lock => ctx.registerEvents(!lock)) // sometimes a component need to prevent the menu from being interracted with
+		this.$root.$on(FORCE_MENU, open => ctx.openMenu(open))
 		this.registerEvents(true)
 	},
 	beforeDestroy() {
@@ -96,7 +101,7 @@ export default {
 		.menu
 			transition transform 200ms linear
 
-	.fantom // fantom
+	.fantom
 		width 100vw
 		height 100vh
 		position fixed
