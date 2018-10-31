@@ -1,14 +1,28 @@
 <template>
     <div :class="$mq">
-        <img :class="{'float':anim}" src="@rs/logo.png" alt="AresRPG logo">
-        <div class="shadow">
+        <img src="@rs/logo.png" alt="">
+        <div class="shadow" :class="{'drop-shadow':anim}">
             <div class="menu">
-                <img :class="{'float':anim}" src="@rs/logo.png" alt="AresRPG logo">
                 <ul>
-                    <li v-rp @click="() => closeAndScroll('#discover')">Discover</li>
-                    <li v-rp @click="() => closeAndScroll('#playnow')">Play Now</li>
-                    <li v-rp @click="() => closeAndScroll('#team')">Team</li>
-                    <li v-rp @click="() => closeAndScroll('#social')">Social</li>
+                    <li class="discover" v-rp @click="() => closeAndScroll('#discover')">
+                        <i class="fas fa-shield-alt" />
+                        <span>Discover</span>
+                        <span>Join the adventure !</span>
+                    </li>
+                    <li class="community" v-rp @click="() => closeAndScroll('#community')">
+                        <i class="fas fa-user-astronaut" />
+                        <span>Community</span>
+                        <span>What's new in the community ?</span>
+                    <li class="media" v-rp @click="() => closeAndScroll('#media')">
+                        <i class="fas fa-coffee" />
+                        <span>Media</span>
+                        <span>Read the latest devblog !</span>
+                    </li>
+                    <li class="contact" v-rp @click="() => closeAndScroll('#contact')">
+                        <i class="far fa-comment-alt" />
+                        <span>Contact</span>
+                        <span>Need help ?</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -63,16 +77,14 @@ export default {
     display flex
     justify-content center
 
-    .float
-        animation float 4s ease-in-out infinite alternate
-
-    &>img
+    img
         position absolute
-        transform scale(.7)
-        width auto
-        opacity .6
-        filter grayscale(1) blur(2px)
-        mix-blend-mode difference
+        mix-blend-mode screen
+        filter grayscale(1)
+
+
+    .drop-shadow
+        filter drop-shadow(0 0 4px black)
 
     .shadow
         width 100%
@@ -80,56 +92,83 @@ export default {
         .menu
             width 100%
             height 100vh
-            background linear-gradient(to right, #ffc500, darken(palette(2), 20%))
+            background linear-gradient(to left, #F4511E, lighten(#F4511E, 20%), lighten(#F4511E, 40%))
             clip-path polygon(100% 13%, 100% 100%, 0 100%, 0 25%)
             display grid
-
-            img
-                grid-area logo
-                transform scale(.7)
-                justify-self center
-                mix-blend-mode difference
-                filter grayscale(1) brightness(.5)
+            position relative
 
             ul
                 display flex
                 flex-flow column nowrap
-                justify-content flex-start
-                align-items center
-                overflow-y scroll
-                height 100%
                 grid-area nav
 
                 li
                     list-style none
-                    smFont(1)
                     text-transform uppercase
-                    width 80%
                     text-align center
-                    padding .6em
-                    margin .5em 0
-                    border 1px solid rgba(black, .5)
-                    border-radius 2px
-                    material(2)
-                    background #232526
-                    background url('~@rs/triangles.png') no-repeat
-                    background-attachment fixed
-                    color black
-                    mix-blend-mode color-burn
-                    filter hue-rotate(45deg)
-                    font-size 1.3em
+                    color palette(1)
+                    display grid
+                    justify-items baseline
+                    justify-content flex-start
+                    align-items center
+                    align-content center
+                    flex 1 auto
+                    box-shadow 0 5px 5px -5px rgba(black,.7)
+                    position relative
+
+                    &>:first-child
+                        grid-area i
+                        font-size 2.5em
+                        justify-self center
+
+                    &>:nth-child(2)
+                        grid-area title
+                        smFont(1)
+                        font-size 1.5em
+                        align-self end
+                        // padding-top .2em
+
+                    &>:nth-child(3)
+                        grid-area caption
+                        smFont(2)
+                        font-size .8em
+                        align-self start
+                        text-transform initial
+
+                .discover
+                    background #F4511E
+                    background linear-gradient(to left, #F4511E, lighten(#F4511E, 20%), lighten(#F4511E, 40%))
+                    z-index 4
+
+                .community
+                    background #FB8C00
+                    background linear-gradient(to left, #FB8C00, lighten(#FB8C00, 20%), lighten(#FB8C00, 40%))
+                    z-index 3
+                .media
+                    background #FFB300
+                    background linear-gradient(to left, #FFB300, lighten(#FFB300, 20%), lighten(#FFB300, 40%))
+                    z-index 2
+
+                .contact
+                    background #FDD835
+                    background linear-gradient(to left, #FDD835, lighten(#FDD835, 20%), lighten(#FDD835, 40%))
+                    z-index 1
 
 @keyframes float
     from
-        transform translateY(-5px) scale(.7)
+        transform translateY(-25px) scale(.5)
 
     to
-        transform translateY(5px) scale(.7)
+        transform translateY(-15px) scale(.5)
 </style>
 
 
 <style scoped>
-.menu {
-	grid: 'logo' 30vh 'nav' 70vmax / 1fr;
+.sm .menu {
+	grid: 'logo' 30vh 'nav' 70vh / 1fr;
+}
+
+.sm .menu li {
+	grid: 'i title' max-content 'i caption' max-content / 120px 1fr;
 }
 </style>
