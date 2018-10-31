@@ -2,16 +2,14 @@
 	<div class="container" :class="{ animate: !dragging }">
 		<div class="fantom" ref="fantom" :style="fantom" />
 		<nav class="menu" ref="menu" :style="`transform: translateX(${menuOffset}%)`">
-			<div class="inner" v-rp.1000>
 				<slot />
-			</div>
 		</nav>
 	</div>
 </template>
 
 <script>
 import { touchListen, touchRemove } from '@core/touch'
-import { LOCK_MENU, FORCE_MENU, MENU_OPENNED } from '@core/events'
+import { LOCK_MENU, FORCE_MENU, MENU_OPENNED, MENU_FLOATING } from '@core/events'
 
 const VELOCITY = 0.2
 
@@ -37,6 +35,7 @@ export default {
 		onTouchStart({ touches: [{ pageX: x }] }) {
 			if (this.opened || x < 0.3 * window.innerWidth) {
 				this.$root.lockScroll(this.$refs.menu)
+				this.$root.$emit(MENU_FLOATING)
 				this.dragging = true
 				this.lastX = x
 				this.startX = x
@@ -65,7 +64,9 @@ export default {
 			this.opened = open
 			this.menuOffset = open ? 0 : -100
 			if (!open) this.$root.unlockScroll(this.$refs.menu)
-			this.$root.$emit(MENU_OPENNED, open)
+
+			const ctx = this
+			setTimeout(() => ctx.$root.$emit(MENU_OPENNED, open), 400)
 		},
 		registerEvents(val) {
 			if (val) touchListen(this.onTouchStart, this.onTouchMove, this.onTouchEnd)
@@ -115,9 +116,5 @@ export default {
 		height 100vh
 		position fixed
 		background lighten(palette(2), 10%)
-
-		.inner
-			height 100%
-			width 100%
 </style>
 

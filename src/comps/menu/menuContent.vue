@@ -1,16 +1,14 @@
 <template>
     <div :class="$mq">
-        <div class="shadow" :class="{ 'animate': animate }">
+        <img src="@rs/logo.png" alt="AresRPG logo">
+        <div class="shadow" :class="{ 'drop-shadow': dropshadow }">
             <div class="menu">
+                <img src="@rs/logo.png" alt="AresRPG logo">
                 <ul>
                     <li>Discover</li>
                     <li>Play Now</li>
-                    <li>News</li>
-                    <li>Media</li>
-                    <li>Forum</li>
-                    <li>Social</li>
                     <li>Team</li>
-                    <li>Contact</li>
+                    <li>Social</li>
                 </ul>
             </div>
         </div>
@@ -18,53 +16,102 @@
 </template>
 
 <script>
-import { MENU_OPENNED } from '@core/events'
+import { MENU_FLOATING, MENU_OPENNED } from '@core/events'
 
 export default {
 	data() {
 		return {
-			animate: false,
+			dropshadow: false,
 		}
 	},
 	mounted() {
 		const ctx = this
-		this.$root.$on(MENU_OPENNED, opened => setTimeout(() => (ctx.animate = opened)), 200)
+		this.$root.$on(MENU_OPENNED, open => (ctx.dropshadow = open))
+		this.$root.$on(MENU_FLOATING, () => (ctx.dropshadow = false))
 	},
 }
 </script>
 
 <style lang="stylus" scoped>
 @require '~@stl/palette'
+@require '~@stl/fonts'
+@require '~@stl/material'
 
 .sm
     width 100%
     height 100%
     background palette(2)
-    background linear-gradient(to right, #ffc500, darken(palette(2), 20%))
+    background url('~@rs/triangles.png') no-repeat
+    background-size cover
+    position relative
+    display flex
+    justify-content center
+
+    &>img
+        position absolute
+        transform scale(.7)
+        width auto
+        opacity .6
+        filter grayscale(1) blur(2px)
+        mix-blend-mode difference
 
     .shadow
-        filter drop-shadow(0 0 0 white)
+        width 100%
 
         .menu
             width 100%
             height 100vh
-            background linear-gradient(to left, #ffc500, darken(palette(2), 20%))
+            background linear-gradient(to right, #ffc500, darken(palette(2), 20%))
             clip-path polygon(100% 13%, 100% 100%, 0 100%, 0 25%)
-            display flex
-            flex-flow column nowrap
-            justify-content flex-end
-            align-items center
+            display grid
 
-            li
-                list-style none
+            img
+                grid-area 'logo'
+                transform scale(.7)
+                justify-self center
+                mix-blend-mode difference
+                filter grayscale(1) brightness(.5)
 
-    .animate
-        animation light 10s infinite ease-in-out alternate
+            ul
+                width 100%
+                height 70%
+                display flex
+                flex-flow column nowrap
+                justify-content center
+                align-items center
+                grid-area 'nav'
 
-@keyframes light
+                li
+                    list-style none
+                    smFont(1)
+                    text-transform uppercase
+                    width 80%
+                    text-align center
+                    padding .8em
+                    margin .5em 0
+                    border 1px solid rgba(black, .5)
+                    border-radius 5px
+                    material(2)
+                    background #232526
+                    background url('~@rs/triangles.png') no-repeat
+                    background-attachment fixed
+                    color #414345
+                    mix-blend-mode luminosity
+
+    .drop-shadow
+        filter drop-shadow(0 0 .2em rgba(black, .9))
+        animation burn 2s ease-in-out infinite alternate
+
+@keyframes burn
     from
         filter drop-shadow(0 0 .2em rgba(black, .9))
 
     to
-        filter drop-shadow(0 -10px .5em rgba(white, .7))
+        filter drop-shadow(0 0 .5em rgba(crimson, .9))
+</style>
+
+<style scoped>
+.menu {
+	grid: 'logo' 30% 'nav' minmax(1fr, 70%) / 1fr;
+}
 </style>
