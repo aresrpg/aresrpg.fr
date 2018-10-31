@@ -1,7 +1,7 @@
 <template>
 	<div class="container" :class="{ animate: !dragging }">
 		<div class="fantom" ref="fantom" :style="fantom" />
-		<nav class="menu" ref="menu" :style="`transform: translateX(${menuOffset}%)`">
+		<nav class="menu" ref="menu" :style="`transform: translate3D(${menuOffset}%,0,0)`">
 				<slot />
 		</nav>
 	</div>
@@ -33,7 +33,7 @@ export default {
 	},
 	methods: {
 		onTouchStart({ touches: [{ pageX: x }] }) {
-			if (this.opened || x < 0.3 * window.innerWidth) {
+			if (this.opened || x < 0.1 * window.innerWidth) {
 				this.$root.lockScroll(this.$refs.menu)
 				this.$root.$emit(MENU_FLOATING)
 				this.dragging = true
