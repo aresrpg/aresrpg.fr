@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { SCROLL_TO } from '@core/events'
+
 export default {
 	data() {
 		return {
@@ -44,6 +46,11 @@ export default {
 		showModal(show) {
 			this.modal = show
 		},
+	},
+	mounted() {
+		this.$root.$on(SCROLL_TO, () => {
+			// TODO
+		})
 	},
 }
 </script>

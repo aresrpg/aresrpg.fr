@@ -5,10 +5,10 @@
             <div class="menu">
                 <img src="@rs/logo.png" alt="AresRPG logo">
                 <ul>
-                    <li>Discover</li>
-                    <li>Play Now</li>
-                    <li>Team</li>
-                    <li>Social</li>
+                    <li v-rp @click="() => closeAndScroll('#discover')">Discover</li>
+                    <li v-rp @click="() => closeAndScroll('#playnow')">Play Now</li>
+                    <li v-rp @click="() => closeAndScroll('#team')">Team</li>
+                    <li v-rp @click="() => closeAndScroll('#social')">Social</li>
                 </ul>
             </div>
         </div>
@@ -16,17 +16,34 @@
 </template>
 
 <script>
-import { MENU_FLOATING, MENU_OPENNED } from '@core/events'
+import { MENU_FLOATING, MENU_OPENNED, FORCE_MENU, SCROLL_TO } from '@core/events'
 
 export default {
 	data() {
 		return {
 			dropshadow: false,
+			scrollTo: undefined,
 		}
+	},
+	methods: {
+		closeAndScroll(to) {
+			const ctx = this
+			setTimeout(() => {
+				ctx.$root.$emit(FORCE_MENU, false)
+				ctx.scrollTo = to
+			}, 200)
+		},
+		onMenu(open) {
+			this.dropshadow = open
+			if (this.scrollTo && !open) {
+				this.$root.$emit(SCROLL_TO, this.scrollTo)
+				this.scrollTo = undefined
+			}
+		},
 	},
 	mounted() {
 		const ctx = this
-		this.$root.$on(MENU_OPENNED, open => (ctx.dropshadow = open))
+		this.$root.$on(MENU_OPENNED, open => ctx.onMenu(open))
 		this.$root.$on(MENU_FLOATING, () => (ctx.dropshadow = false))
 	},
 }
