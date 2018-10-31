@@ -13,13 +13,7 @@
 		</desktop-menu>
 
 		<!-- content -->
-		<h-dummy title="void content" class="dummy" h="300px">
-			<h1>Top</h1>
-		</h-dummy>
-
-		<h-dummy title="void content" class="dummy" h="1000px">
-			<h1>Under Construction</h1>
-		</h-dummy>
+		<landing />
 
 		<a-footer title="the footer" />
 	</div>
@@ -39,7 +33,7 @@ export default {
 		mobileMenu: () => loadComponent('menu/menuWrapper.sm'),
 		desktopMenu: () => loadComponent('menu/menuWrapper.lg'),
 		menuContent: () => loadComponent('menu/menuContent'),
-		hDummy: () => import('@h/hDummy'),
+		landing: () => loadComponent('landing'),
 		aFooter: () => loadComponent('aFooter'),
 	},
 	methods: {

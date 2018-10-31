@@ -1,9 +1,9 @@
 <template>
     <div :class="$mq">
-        <img src="@rs/logo.png" alt="AresRPG logo">
-        <div class="shadow" :class="{ 'drop-shadow': dropshadow }">
+        <img :class="{'float':anim}" src="@rs/logo.png" alt="AresRPG logo">
+        <div class="shadow">
             <div class="menu">
-                <img src="@rs/logo.png" alt="AresRPG logo">
+                <img :class="{'float':anim}" src="@rs/logo.png" alt="AresRPG logo">
                 <ul>
                     <li v-rp @click="() => closeAndScroll('#discover')">Discover</li>
                     <li v-rp @click="() => closeAndScroll('#playnow')">Play Now</li>
@@ -21,7 +21,7 @@ import { MENU_FLOATING, MENU_OPENNED, FORCE_MENU, SCROLL_TO } from '@core/events
 export default {
 	data() {
 		return {
-			dropshadow: false,
+			anim: false,
 			scrollTo: undefined,
 		}
 	},
@@ -34,7 +34,7 @@ export default {
 			}, 200)
 		},
 		onMenu(open) {
-			this.dropshadow = open
+			this.anim = open
 			if (this.scrollTo && !open) {
 				this.$root.$emit(SCROLL_TO, this.scrollTo)
 				this.scrollTo = undefined
@@ -42,9 +42,8 @@ export default {
 		},
 	},
 	mounted() {
-		const ctx = this
-		this.$root.$on(MENU_OPENNED, open => ctx.onMenu(open))
-		this.$root.$on(MENU_FLOATING, () => (ctx.dropshadow = false))
+		this.$root.$on(MENU_OPENNED, open => this.onMenu(open))
+		this.$root.$on(MENU_FLOATING, () => (this.anim = false))
 	},
 }
 </script>
@@ -63,6 +62,9 @@ export default {
     position relative
     display flex
     justify-content center
+
+    .float
+        animation float 4s ease-in-out infinite alternate
 
     &>img
         position absolute
@@ -83,20 +85,20 @@ export default {
             display grid
 
             img
-                grid-area 'logo'
+                grid-area logo
                 transform scale(.7)
                 justify-self center
                 mix-blend-mode difference
                 filter grayscale(1) brightness(.5)
 
             ul
-                width 100%
-                height 70%
                 display flex
                 flex-flow column nowrap
-                justify-content center
+                justify-content flex-start
                 align-items center
-                grid-area 'nav'
+                overflow-y scroll
+                height 100%
+                grid-area nav
 
                 li
                     list-style none
@@ -104,31 +106,30 @@ export default {
                     text-transform uppercase
                     width 80%
                     text-align center
-                    padding .8em
+                    padding .6em
                     margin .5em 0
                     border 1px solid rgba(black, .5)
-                    border-radius 5px
+                    border-radius 2px
                     material(2)
                     background #232526
                     background url('~@rs/triangles.png') no-repeat
                     background-attachment fixed
-                    color #414345
-                    mix-blend-mode luminosity
+                    color black
+                    mix-blend-mode color-burn
+                    filter hue-rotate(45deg)
+                    font-size 1.3em
 
-    .drop-shadow
-        filter drop-shadow(0 0 .2em rgba(black, .9))
-        animation burn 2s ease-in-out infinite alternate
-
-@keyframes burn
+@keyframes float
     from
-        filter drop-shadow(0 0 .2em rgba(black, .9))
+        transform translateY(-5px) scale(.7)
 
     to
-        filter drop-shadow(0 0 .5em rgba(crimson, .9))
+        transform translateY(5px) scale(.7)
 </style>
+
 
 <style scoped>
 .menu {
-	grid: 'logo' 30% 'nav' minmax(1fr, 70%) / 1fr;
+	grid: 'logo' 30vh 'nav' 70vmax / 1fr;
 }
 </style>

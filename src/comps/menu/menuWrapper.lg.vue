@@ -6,7 +6,7 @@
 <script>
 export default {
     components: {
-		hDummy: () => import('@h/hDummy.vue'),
+		hDummy: () => loadComponent('dummy'),
 	}
 }
 </script>

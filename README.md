@@ -6,10 +6,11 @@
 
 ## TODO
 
-
-- landing
+- prevent menu from scrolling when inner menu nav is scrolled
+- large styling
 - error component
 - 404
+
 ---
 
 ### Project setup

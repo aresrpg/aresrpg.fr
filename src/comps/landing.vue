@@ -1,15 +1,15 @@
 <template>
-	<div class="container">
-		<div v-if="$q.platform.is.mobile" class="video-container">
+	<div class="container" :class="$mq">
+		<div v-if="$mq==='lg'" class="video-container">
 			<h-video class="trailer" :sources=sources :poster=poster v-video.autoplay.muted.loop />
 		</div>
-		<img :src=logo alt="AresRPG logo">
+		<img class="logo" :class="{'anim':animateLogo}" :src=logo alt="AresRPG logo">
+		<img class="fake" :class="{'anim':animateLogo}" :src=logo alt="AresRPG logo">
 		<div class="glassed">
-			<span class="under">under</span>
-			<span class="construct">construction</span>
-			<div class="wip">
-				<wip />
-			</div>
+			<p>
+				<span class="under">under</span>
+				<span class="construct">construction</span>
+			</p>
 		</div>
 	</div>
 </template>
@@ -19,22 +19,25 @@ import { applyAttributes } from '@core/directives'
 import mp4T from '@rs/trailer.mp4'
 import webmT from '@rs/trailer.webm'
 import poster from '@rs/snow-background.jpg'
-
-const datas = {
-	logo,
-	poster,
-	sources: [{ file: mp4T, format: 'video/mp4' }, { file: webmT, format: 'video/webm' }],
-}
-
-const directives = {
-	video: applyAttributes,
-}
+import logo from '@rs/logo.png'
+import { MENU_OPENNED } from '@core/events'
 
 export default {
-	data: () => datas,
-	directives,
+	data() {
+		return {
+			logo,
+			poster,
+			sources: [{ file: mp4T, format: 'video/mp4' }, { file: webmT, format: 'video/webm' }],
+			animateLogo: true,
+		}
+	},
+	directives: { video: applyAttributes },
 	components: {
-		hVideo: () => import('@h/hVideo.vue'),
+		hVideo: () => loadComponent('fullScreenVideo'),
+	},
+	mounted() {
+		const ctx = this
+		this.$root.$on(MENU_OPENNED, open => (ctx.animateLogo = !open))
 	},
 }
 </script>
@@ -45,112 +48,82 @@ export default {
 @require '~@stl/palette'
 @require '~@stl/sceat-shapes'
 
-$dotted = url('~@rs/dot.png')
-$snow = url('~@rs/snow-background.jpg')
-$low-fi = rgba(green, .4)
-
 .container
-	display flex
-	flex-flow column nowrap
-	text-align center
-	justify-content space-evenly
-	height 100vh
-	font-family $raleway
-	color silver
-	text-transform uppercase
-	align-items center
-	background $snow, $dotted
-	background-blend-mode darken
-	background-position bottom
-	text-transform uppercase
-	text-shadow 2px 4px 3px rgba(0, 0, 0, .5)
-	overflow hidden
-
-	.video-container
-		position absolute
-		width calc(100vh * (1280 / 720))
-		height calc(100vw * (720 / 1280))
-		min-width 100%
-		min-height 100%
-		top 50%
-		left 50%
-		transform translate(-50%, -50%)
-
-		.trailer
-			width 100%
-			height 100%
-			top 0
-			left 0
-			position absolute
-
-	img
-		width 30vmin
-		max-width 350px
-		min-width 240px
-		max-height 350px
-		transform translateY(30%)
-
-	.glassed
-		display flex
-		flex-flow row nowrap
-		flex 1 0
-		max-height 10vh
+	&.sm
 		width 100%
+		height 100vh
+		background url('~@rs/snow-background.jpg') no-repeat
+		background-size cover
+		background-position center
+		display flex
+		justify-content space-between
 		align-items center
-		justify-content space-around
-		padding .8em 1em
-		backdrop-filter brightness(1.2) blur(5px)
+		flex-flow column nowrap
+		overflow hidden
 
-		.under
-			color gold
-			font-weight 900
-			font-size 2em
+		.logo
+			padding-top 3em
+			mix-blend-mode color-dodge
+			filter grayscale(1)
+			transform scale(.7)
 
-		.construct
-			font-size 2em
-			font-weight 300
-			padding-right 1em
+			&.anim
+				animation logo 4s ease-in-out 4s infinite alternate, float 4s ease-in-out infinite alternate
 
-		.wip
-			filter drop-shadow(0 0 .2em black)
+		.fake
+			position absolute
+			padding-top 3em
+			top 0
+			mix-blend-mode difference
+			filter grayscale(1)
+			transform scale(.7)
 
-			&>*
-				fill gold
-				min-width 6vmax
+			&.anim
+				animation logo 4s ease-in-out infinite alternate, float 4s ease-in-out infinite alternate
 
-@supports not (backdrop-filter: blur(0))
-	.glassed
-		border solid 1px $low-fi
-		box-shadow 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23)
-		border-radius 3px
-
-@media screen and (max-width: 600px)
-	.container
 		.glassed
-			display grid
-			grid-template-rows 1fr 1fr
-			flex 1 0
-			max-height 10vh
-			width 100vw
+			width 100%
+			height 50%
+			display flex
+			flex-flow column nowrap
+			justify-content start
 			align-items center
-			justify-content center
 
-			.construct
-				letter-spacing 0
-				font-size 1.5em
-				padding-right 0
+			p
+				display flex
+				flex-flow column nowrap
+				text-align end
+				font-size 10vmin
+				text-transform uppercase
+				text-shadow 0 0 10px black
+				padding 1em 50%
+				backdrop-filter blur(3px)
 
-			.under
-				font-size 1.5em
-				font-weight 900
-				justify-self self-end
+				@supports not (backdrop-filter: blur(3px))
+					material(2)
+					border 1px solid rgba(palette(1), .8)
 
-			.wip>*
-				visibility hidden
-				position absolute
+				.under
+					smFont(2)
+					color palette(2)
 
-		img
-			min-width 150px
+				.construct
+					smFont(1)
+					color palette(3)
+
+@keyframes logo
+	from
+		opacity 1
+
+	to
+		opacity 0
+
+@keyframes float
+	from
+		transform translateY(-5px) scale(.7)
+
+	to
+		transform translateY(5px) scale(.7)
 </style>
 
 
