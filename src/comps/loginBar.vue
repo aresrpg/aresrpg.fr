@@ -18,7 +18,8 @@
 </template>
 
 <script>
-import { FORCE_MENU } from '@core/events'
+const { eventBus } = window
+const { TRIGGER_MENU } = eventBus
 
 const FACTOR = 2
 const HIDDEN = 0.85
@@ -41,7 +42,7 @@ export default {
 			this.lastY = window.pageYOffset
 		},
 		openMenu() {
-			this.$root.$emit(FORCE_MENU, true)
+			eventBus.send(TRIGGER_MENU, true)
 		},
 	},
 	components: {
@@ -98,6 +99,7 @@ export default {
             span
                 flex 1 1 70%
                 transform translateX(-9%)
+                padding 2em // increase clickable surface
 
             .icon
                 display flex

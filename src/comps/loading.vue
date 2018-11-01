@@ -101,17 +101,20 @@ const gravityBounce = el => {
 
 const destroy = el => dyn.stop(el)
 
+const { eventBus } = window
+const { TRIGGER_MENU_LOCK } = eventBus
+
 export default {
 	mounted() {
 		const ctx = this
 		gravityBounce(this.$refs.logo)
 		this.itv = setInterval(() => gravityBounce(ctx.$refs.logo), 2500)
-		this.$root.$emit('lockMenu', true)
+		eventBus.send(TRIGGER_MENU_LOCK, true)
 	},
 	beforeDestroy() {
 		destroy(this.$refs.logo)
 		clearInterval(this.itv)
-		this.$root.$emit('lockMenu', false)
+		eventBus.send(TRIGGER_MENU_LOCK, false)
 	},
 }
 </script>

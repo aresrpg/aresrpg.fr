@@ -6,6 +6,8 @@ import Ripple from 'vue-ripple-directive'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import './registerServiceWorker'
 
+const eventBus = new Vue()
+
 Vue.config.productionTip = false
 Vue.directive('rp', Ripple)
 Vue.use(VueMq, {
@@ -22,6 +24,20 @@ window.loadComponent = name => ({
 	delay: 200,
 	timeout: 5000, // TODO
 })
+
+window.eventBus = {
+	on: eventBus.$on,
+	off: eventBus.$off,
+	once: eventBus.$once,
+	send: eventBus.$emit,
+	events: {
+		TRIGGER_MENU_LOCK: 'lockmenu',
+		TRIGGER_MENU_OPEN: 'forcemenu',
+		MENU_FLOATING: 'menufloating',
+		MENU_OPENNED: 'menuopenned',
+		TRIGGER_SCROLL: 'scrollto',
+	},
+}
 
 new Vue({
 	router,

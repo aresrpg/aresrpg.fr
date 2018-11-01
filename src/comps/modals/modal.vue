@@ -10,7 +10,9 @@
 <script>
 import { touchListen, touchRemove } from '@core/touch'
 import dyn from 'dynamics.js'
-import { LOCK_MENU } from '@core/events'
+
+const {eventBus} = window
+const { TRIGGER_MENU_LOCK } = eventBus
 
 function hasScrollableContent(el) {
 	const height = el.offsetHeight
@@ -81,7 +83,7 @@ export default {
 		},
 	},
 	mounted() {
-		this.$root.$emit(LOCK_MENU, true)
+		eventBus.send(TRIGGER_MENU_LOCK, true)
 		this.$root.lockScroll(this.$refs.modal)
 		this.drag.from = { x: this.box.offsetWidth, y: this.box.offsetHeight }
 
@@ -89,7 +91,7 @@ export default {
 		if (!hasScrollableContent(this.box)) touchListen(() => {}, this.dragMove, this.dragEnd)
 	},
 	beforeDestroy() {
-		this.$root.$emit(LOCK_MENU, false)
+		eventBus.send(TRIGGER_MENU_LOCK, false)
 		this.$root.unlockScroll(this.$refs.modal)
 		touchRemove(() => {}, this.dragMove, this.dragEnd)
 	},

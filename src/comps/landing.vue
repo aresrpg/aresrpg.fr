@@ -20,7 +20,8 @@ import mp4T from '@rs/trailer.mp4'
 import webmT from '@rs/trailer.webm'
 import poster from '@rs/snow-background.jpg'
 import logo from '@rs/logo.png'
-import { MENU_OPENNED } from '@core/events'
+
+const { eventBus } = window
 
 export default {
 	data() {
@@ -32,12 +33,16 @@ export default {
 		}
 	},
 	directives: { video: applyAttributes },
+	methods: {},
 	components: {
 		hVideo: () => loadComponent('fullScreenVideo'),
 	},
 	mounted() {
-		const ctx = this
-		this.$root.$on(MENU_OPENNED, open => (ctx.animateLogo = !open))
+		this.onMenuOpenned = open => (this.animateLogo = !open)
+		eventBus.on(MENU_OPENNED, this.onMenuOpenned)
+	},
+	beforeDestroy() {
+		eventBus.off(MENU_OPENNED, this.onMenuOpenned)
 	},
 }
 </script>

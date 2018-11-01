@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import { MENU_FLOATING, MENU_OPENNED, FORCE_MENU, SCROLL_TO } from '@core/events'
+const { eventBus } = window
+const { MENU_FLOATING, MENU_OPENNED, TRIGGER_MENU, TRIGGER_MENU_SCROLL } = eventBus.events
 
 export default {
 	data() {
@@ -41,23 +42,27 @@ export default {
 	},
 	methods: {
 		closeAndScroll(to) {
-			const ctx = this
 			setTimeout(() => {
-				ctx.$root.$emit(FORCE_MENU, false)
-				ctx.scrollTo = to
+				eventBus.send(TRIGGER_MENU, false)
+				this.scrollTo = to
 			}, 200)
 		},
 		onMenu(open) {
 			this.anim = open
 			if (this.scrollTo && !open) {
-				this.$root.$emit(SCROLL_TO, this.scrollTo)
+				eventBus.send(SCROLL_TO, this.scrollTo)
 				this.scrollTo = undefined
 			}
 		},
 	},
 	mounted() {
-		this.$root.$on(MENU_OPENNED, open => this.onMenu(open))
-		this.$root.$on(MENU_FLOATING, () => (this.anim = false))
+		this.onMenuFloat = () => (this.anim = false)
+		eventBus.on(MENU_OPENNED, this.onMenu)
+		eventBus.on(MENU_FLOATING, this.onMenuFloat)
+	},
+	beforeDestroy() {
+		eventBus.off(MENU_OPENNED, this.onMenu)
+		eventBus.off(MENU_FLOATING, this.onMenuFloat)
 	},
 }
 </script>
@@ -81,7 +86,6 @@ export default {
         position absolute
         mix-blend-mode screen
         filter grayscale(1)
-
 
     .drop-shadow
         filter drop-shadow(0 0 4px black)
@@ -113,7 +117,7 @@ export default {
                     align-items center
                     align-content center
                     flex 1 auto
-                    box-shadow 0 5px 5px -5px rgba(black,.7)
+                    box-shadow 0 5px 5px -5px rgba(black, .7)
                     position relative
 
                     &>:first-child
@@ -144,6 +148,7 @@ export default {
                     background #FB8C00
                     background linear-gradient(to left, #FB8C00, lighten(#FB8C00, 20%), lighten(#FB8C00, 40%))
                     z-index 3
+
                 .media
                     background #FFB300
                     background linear-gradient(to left, #FFB300, lighten(#FFB300, 20%), lighten(#FFB300, 40%))

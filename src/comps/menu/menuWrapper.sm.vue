@@ -2,14 +2,16 @@
 	<div class="container" :class="{ animate: !dragging }">
 		<div class="fantom" ref="fantom" :style="fantom" />
 		<nav class="menu" ref="menu" :style="`transform: translate3D(${menuOffset}%,0,0)`">
-				<slot />
+			<slot />
 		</nav>
 	</div>
 </template>
 
 <script>
 import { touchListen, touchRemove } from '@core/touch'
-import { LOCK_MENU, FORCE_MENU, MENU_OPENNED, MENU_FLOATING } from '@core/events'
+
+const { eventBus } = window
+const { TRIGGER_MENU_LOCK, TRIGGER_MENU, MENU_OPENNED, MENU_FLOATING } = eventBus
 
 const VELOCITY = 0.2
 
@@ -35,7 +37,7 @@ export default {
 		onTouchStart({ touches: [{ pageX: x }] }) {
 			if (this.opened || x < 0.1 * window.innerWidth) {
 				this.$root.lockScroll(this.$refs.menu)
-				this.$root.$emit(MENU_FLOATING)
+				eventBus.send(MENU_FLOATING)
 				this.dragging = true
 				this.lastX = x
 				this.startX = x
@@ -64,9 +66,7 @@ export default {
 			this.opened = open
 			this.menuOffset = open ? 0 : -100
 			if (!open) this.$root.unlockScroll(this.$refs.menu)
-
-			const ctx = this
-			setTimeout(() => ctx.$root.$emit(MENU_OPENNED, open), 400)
+			setTimeout(() => eventBus.send(MENU_OPENNED, open), 400)
 		},
 		registerEvents(val) {
 			if (val) touchListen(this.onTouchStart, this.onTouchMove, this.onTouchEnd)
@@ -74,14 +74,16 @@ export default {
 		},
 	},
 	mounted() {
-		const ctx = this
 		this.opened = false
-		this.$root.$on(LOCK_MENU, lock => ctx.registerEvents(!lock)) // sometimes a component need to prevent the menu from being interracted with
-		this.$root.$on(FORCE_MENU, open => ctx.openMenu(open))
+		this.regIfUnlocked = lock => this.registerEvents(!lock)
+		eventBus.on(TRIGGER_MENU_LOCK, this.regIfUnlocked)
+		eventBus.on(TRIGGER_MENU, this.openMenu)
 		this.registerEvents(true)
 	},
 	beforeDestroy() {
 		this.registerEvents(false)
+		eventBus.off(TRIGGER_MENU_LOCK, this.regIfUnlocked)
+		eventBus.off(TRIGGER_MENU, this.openMenu)
 	},
 }
 </script>
