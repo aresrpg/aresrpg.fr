@@ -1,50 +1,53 @@
 import Vue from 'vue'
-import App from '@/aresrpg.vue'
-import router from './router'
+import App from '@/App.vue'
+import './registerServiceWorker'
+import router from '@core/routes'
 import VueMq from 'vue-mq'
 import Ripple from 'vue-ripple-directive'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
-import './registerServiceWorker'
-
-const eventBus = new Vue()
+import store from '@core/stores'
+import Icons from '@cmp/utils/icons.vue'
+import aos from 'aos'
+import SmoothScroll from 'smoothscroll-for-websites'
+import i18n from '@core/i18n'
+import '@core/misc/scrollFire' // init
+import 'aos/dist/aos.css'
 
 Vue.config.productionTip = false
+
 Vue.directive('rp', Ripple)
+Vue.component('fa', Icons)
 Vue.use(VueMq, {
-	breakpoints: {
-		sm: 800,
-		lg: Infinity,
-	},
+  breakpoints: {
+    sm: 813, // iphoneX max
+    lg: Infinity,
+  },
 })
 
-window.loadComponent = name => ({
-	component: import(`@cmp/${name}.vue`),
-	loading: () => import('@cmp/loading.vue'),
-	error: () => import('@cmp/loading.vue'), // TODO
-	delay: 200,
-	timeout: 5000, // TODO
+aos.init({
+  offset: 200,
+  duration: 1000,
+  easing: 'ease-in-sine',
+  delay: 100,
+  disable: () => window.innerWidth < 814,
+  anchorPlacement: 'top-bottom'
 })
-
-window.eventBus = {
-	on: eventBus.$on,
-	off: eventBus.$off,
-	once: eventBus.$once,
-	send: eventBus.$emit,
-	events: {
-		TRIGGER_MENU_LOCK: 'lockmenu',
-		TRIGGER_MENU_OPEN: 'forcemenu',
-		MENU_FLOATING: 'menufloating',
-		MENU_OPENNED: 'menuopenned',
-		TRIGGER_SCROLL: 'scrollto',
-	},
-}
 
 new Vue({
 	router,
+	i18n,
 	methods: {
 		// litle npm script to disable body scroll on all devices (because those IOS suckers think different)
 		lockScroll: el => disableBodyScroll(el),
 		unlockScroll: el => enableBodyScroll(el),
+	},
+	store,
+	mounted() {
+		SmoothScroll({
+			animationTime: 700,
+			accelerationDelta: 30,
+			accelerationMax: 3,
+		  })
 	},
 	render: h => h(App),
 }).$mount('#app')
