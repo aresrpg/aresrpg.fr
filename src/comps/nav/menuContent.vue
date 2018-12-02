@@ -1,41 +1,77 @@
+<i18n>
+en:
+  cardA:
+    title: "Discover"
+    caption: "Join the adventure !"
+  cardB:
+    title: "Community"
+    caption: "What's new in the community ?"
+  cardC:
+    title: "Media"
+    caption: "Read the latest devblog !"
+  cardD:
+    title: "Contact"
+    caption: "Need help ?"
+fr:
+  cardA:
+    title: "Découvrir"
+    caption: "Rejoindre l'aventure !"
+  cardB:
+    title: "Communauté"
+    caption: "Les news de la communauté"
+  cardC:
+    title: "Média"
+    caption: "Lisez le dernier devblog !"
+  cardD:
+    title: "Contact"
+    caption: "Besoin d'aide ?"
+</i18n>
+
 <template lang="pug">
     div(:class="$mq")
         img(src="@rs/logo.png" alt="logo")
-        .shadow(:class="{'drop-shadow':anim}")
+        .shadow(:class="{'drop-shadow': !isMenuFloating && isMenuOpened}")
             .menu
                 ul
                     li.discover(v-rp)
                         fa(fas="shield-alt")
-                        span Discover
-                        span Join the adventure !
+                        span(v-t="'cardA.title'")
+                        span(v-t="'cardA.caption'")
                     li.community(v-rp)
                         fa(fas="user-astronaut")
-                        span Community
-                        span What's new in the community ?
+                        span(v-t="'cardB.title'")
+                        span(v-t="'cardB.caption'")
                     li.media(v-rp)
                         fa(fas="coffee")
-                        span Media
-                        span Read the latest devblog !
+                        span(v-t="'cardC.title'")
+                        span(v-t="'cardC.caption'")
                     li.contact(v-rp)
                         fa(far="comment-alt")
-                        span Contact
-                        span Need help ?
+                        span(v-t="'cardD.title'")
+                        span(v-t="'cardD.caption'")
+        .lang(:class="{'drop-shadow': !isMenuFloating && isMenuOpened}")
+          fr(v-if="locale === 'en'" @click.native="changeLocale('fr')")
+          gb(v-else @click.native="changeLocale('en')")
 </template>
 
 <script>
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { namespace, Getter, Action } from 'vuex-class'
 
-@Component
+const menu = namespace('menu')
+const lang = namespace('lang')
+
+@Component({
+  components: {
+    fr: () => import('@svg/lang/fr.svg'),
+    gb: () => import('@svg/lang/gb.svg')
+  }
+})
 export default class MenuContent extends Vue {
-  anim = false
-
-  onMenu(open) {
-    this.anim = open
-  }
-
-  mounted() {
-    this.onMenuFloat = () => (this.anim = false)
-  }
+  @menu.Getter isMenuFloating
+  @menu.Getter isMenuOpened
+  @lang.Getter locale
+  @lang.Action changeLocale
 
 }
 </script>
@@ -58,11 +94,11 @@ export default class MenuContent extends Vue {
     mix-blend-mode screen
     filter grayscale(1)
 
-  .drop-shadow
-    filter drop-shadow(0 0 4px black)
-
   .shadow
     width 100%
+
+    &.drop-shadow
+      filter drop-shadow(0 0 4px black)
 
     .menu
       width 100%
@@ -70,6 +106,7 @@ export default class MenuContent extends Vue {
       background linear-gradient(to left, #F4511E, lighten(#F4511E, 20%), lighten(#F4511E, 40%))
       clip-path polygon(100% 13%, 100% 100%, 0 100%, 0 25%)
       display grid
+      grid 'logo' 30vh 'nav' 70vh / 1fr
       position relative
 
       ul
@@ -83,6 +120,7 @@ export default class MenuContent extends Vue {
           text-align center
           color #2c3e50
           display grid
+          grid 'i title' max-content 'i caption' max-content / 120px 1fr
           justify-items baseline
           justify-content flex-start
           align-items center
@@ -90,6 +128,7 @@ export default class MenuContent extends Vue {
           flex 1 auto
           box-shadow 0 5px 5px -5px rgba(black, .7)
           position relative
+          order 1
 
           &>:first-child
             grid-area i
@@ -130,21 +169,13 @@ export default class MenuContent extends Vue {
           background linear-gradient(to left, #FDD835, lighten(#FDD835, 20%), lighten(#FDD835, 40%))
           z-index 1
 
-@keyframes float
-  from
-    transform translateY(-25px) scale(.5)
+  .lang
+    width 30px
+    position absolute
+    top 10px
+    left 10px
+    z-index 2
 
-  to
-    transform translateY(-15px) scale(.5)
-</style>
-
-
-<style scoped>
-.sm .menu {
-  grid: "logo" 30vh "nav" 70vh / 1fr;
-}
-
-.sm .menu li {
-  grid: "i title" max-content "i caption" max-content / 120px 1fr;
-}
+    &.drop-shadow
+      filter drop-shadow(0 0 10px black)
 </style>

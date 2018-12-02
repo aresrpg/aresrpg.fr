@@ -1,8 +1,8 @@
 <template lang="pug">
 	section.site
 		login-bar
-		mobile-menu(v-if="$mq==='sm'")
-			menu-content
+		mobile-menu(v-if="$mq==='sm'" bg="f0a30a")
+			menuContent
 		landing
 </template>
 

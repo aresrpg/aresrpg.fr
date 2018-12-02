@@ -13,6 +13,9 @@
 
 <script>
 import { Vue, Component } from 'vue-property-decorator'
+import { Action, namespace } from 'vuex-class'
+
+const menu = namespace('menu')
 
 const FACTOR = 2
 const HIDDEN = 0.85
@@ -22,6 +25,8 @@ export default class LoginBar extends Vue {
   offset = 0
   modal = false
 
+  @menu.Action openMenu
+
   onScroll() {
     const deltaY = window.pageYOffset - this.lastY
     const height = this.$refs.container.offsetHeight * HIDDEN
@@ -30,10 +35,6 @@ export default class LoginBar extends Vue {
     if (this.offset > height) this.offset = height
     if (this.offset < 0) this.offset = 0
     this.lastY = window.pageYOffset
-  }
-
-  openMenu() {
-    eventBus.send(TRIGGER_MENU, true)
   }
 
   mounted() {
