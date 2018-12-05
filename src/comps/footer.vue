@@ -1,7 +1,8 @@
 <i18n>
 en:
-    follow: "Join us"
     credits: "Designed and integrated by {link}"
+fr:
+    credits: "Conçu et intégré par {link}"
 </i18n>
 
 <template lang="pug">
