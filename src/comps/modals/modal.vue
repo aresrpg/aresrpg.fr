@@ -1,14 +1,17 @@
 <template lang="pug">
 	div(ref="modal" :class="$mq")
-		.darken(:class="{ fade }")
-		.box(ref="box" :style="{transform: `translate(${drag.offsetX}px,${drag.offsetY}px)`}")
+		.darken(:class="{ 'fade': isClosing }" @click="$emit('outside')")
+		.box.in(:class="{ 'out': isClosing }" ref="box" :style="{transform: `translate(${drag.offsetX}px,${drag.offsetY}px)`}")
 			slot
 </template>
 
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { touchListen, touchRemove } from '@core/misc/touch'
+import { Getter, namespace } from 'vuex-class'
 import dyn from 'dynamics.js'
+
+const modals = namespace('modals')
 
 function hasScrollableContent(el) {
   const height = el.offsetHeight
@@ -18,7 +21,8 @@ function hasScrollableContent(el) {
 
 @Component
 export default class Modal extends Vue {
-  @Prop(Boolean) fade
+
+  @modals.Getter isClosing
 
   drag = {
     active: false,
@@ -79,7 +83,7 @@ export default class Modal extends Vue {
     // we add the cool effect only if the bow will never be scrolled
     if (!hasScrollableContent(this.box)) touchListen(() => { }, this.dragMove, this.dragEnd)
   }
-  
+
   beforeDestroy() {
     this.$root.unlockScroll(this.$refs.modal)
     touchRemove(() => { }, this.dragMove, this.dragEnd)
@@ -97,7 +101,6 @@ export default class Modal extends Vue {
   display flex
   z-index 4
   top 0
-  font-size 2rem
   justify-content center
   align-items center
 
@@ -125,5 +128,45 @@ export default class Modal extends Vue {
     color silver
     border-radius 5px
     material(4)
+
+    &.in
+      backface-visibility visible !important
+      animation-name flipInX
+      animation-duration 400ms
+      animation-direction alternate
+
+    &.out
+      animation-name fadeOutUp
+      animation-duration 400ms
+      animation-direction alternate
+      animation-fill-mode forwards
+
+@keyframes fadeOutUp
+  from
+    opacity 1
+
+  to
+    opacity 0
+    transform translate3d(0, -50%, 0)
+
+@keyframes flipInX
+  from
+    transform perspective(400px) rotate3d(1, 0, 0, 90deg)
+    animation-timing-function ease-in
+    opacity 0
+
+  40%
+    transform perspective(400px) rotate3d(1, 0, 0, -20deg)
+    animation-timing-function ease-in
+
+  60%
+    transform perspective(400px) rotate3d(1, 0, 0, 10deg)
+    opacity 1
+
+  80%
+    transform perspective(400px) rotate3d(1, 0, 0, -5deg)
+
+  to
+    transform perspective(400px)
 </style>
 

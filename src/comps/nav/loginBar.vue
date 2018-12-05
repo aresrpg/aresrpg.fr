@@ -1,3 +1,12 @@
+<i18n>
+en:
+  log: "login"
+  reg: "register"
+fr:
+  log: "connexion"
+  reg: "s'enregistrer"
+</i18n>
+
 <template lang="pug">
     .login
         .container(ref="container" :class='$mq' :style="`transform: translateY(${-offset}px)`")
@@ -6,16 +15,18 @@
                 .icon(@click="openMenu")
                     fa(fas="bars")
                     .divider
-                span(@click="") login
-            .o-reveal(@click="" v-rp)
-                span register
+                span(@click="showM()" v-t="'log'")
+            .o-reveal(@click="showM()" v-rp)
+                span(v-t="'reg'")
 </template>
 
 <script>
 import { Vue, Component } from 'vue-property-decorator'
 import { Action, namespace } from 'vuex-class'
+import { Modals } from '@core/stores/modules/modals'
 
 const menu = namespace('menu')
+const modals = namespace('modals')
 
 const FACTOR = 2
 const HIDDEN = 0.85
@@ -23,9 +34,13 @@ const HIDDEN = 0.85
 @Component
 export default class LoginBar extends Vue {
   offset = 0
-  modal = false
 
   @menu.Action openMenu
+  @modals.Action showModal
+
+  showM() {
+    this.showModal({ name: Modals.NOT_READY_MODAL, val: true })
+  }
 
   onScroll() {
     const deltaY = window.pageYOffset - this.lastY
@@ -83,11 +98,11 @@ export default class LoginBar extends Vue {
       border-right .6em solid #f0a30a
       display flex
       align-items center
+      justify-content space-evenly
 
       span
         flex 1 1 70%
         transform translateX(-9%)
-        padding 2em // increase clickable surface
 
       .icon
         display flex

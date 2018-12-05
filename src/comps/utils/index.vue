@@ -2,13 +2,15 @@
     .utils
         return-to-top(v-if="$mq==='lg'")
         toasts
+        modals
 </template>
 
 <script>
 export default {
-    components: {
-		returnToTop: () => import('@cmp/nav/returnToTop.vue'),
-        toasts: () => import('@cmp/modals/toasts.vue'),
-    }
+  components: {
+    returnToTop: () => import('@cmp/nav/returnToTop.vue'),
+    toasts: () => import('@cmp/toasts/index.vue'),
+    modals: () => import('@cmp/modals/index.vue')
+  }
 }
 </script>

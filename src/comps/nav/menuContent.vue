@@ -28,9 +28,10 @@ fr:
 </i18n>
 
 <template lang="pug">
+    - var shadow = {':class': "{'drop-shadow': !isMenuAnimating}"}
     div(:class="$mq")
         img(src="@rs/logo.png" alt="logo")
-        .shadow(:class="{'drop-shadow': !isMenuFloating && isMenuOpened}")
+        .shadow&attributes(shadow)
             .menu
                 ul
                     li.discover(v-rp)
@@ -49,9 +50,11 @@ fr:
                         fa(far="comment-alt")
                         span(v-t="'cardD.title'")
                         span(v-t="'cardD.caption'")
-        .lang(:class="{'drop-shadow': !isMenuFloating && isMenuOpened}")
-          fr(v-if="locale === 'en'" @click.native="changeLocale('fr')")
-          gb(v-else @click.native="changeLocale('en')")
+        .lang&attributes(shadow)
+          .fr(v-if="locale === 'en'" @click="changeLocale('fr')")
+            fr
+          .gb(v-else @click="changeLocale('en')")
+            gb
 </template>
 
 <script>
@@ -70,8 +73,13 @@ const lang = namespace('lang')
 export default class MenuContent extends Vue {
   @menu.Getter isMenuFloating
   @menu.Getter isMenuOpened
+  @menu.Getter isMenuAnimating
   @lang.Getter locale
   @lang.Action changeLocale
+
+  clicked() {
+    console.log('slt')
+  }
 
 }
 </script>

@@ -23,7 +23,7 @@ const key = 'donuts'
 
 @Component({
   components: {
-    toast: () => import('@cmp/modals/toast.vue')
+    toast: () => import('@cmp/toasts/toast.vue')
   }
 })
 export default class Cookies extends Vue {

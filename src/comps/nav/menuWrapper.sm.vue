@@ -24,11 +24,14 @@ export default class SmWrapper extends Vue {
   @Prop(String) bg
 
   menuOffset = -100
+  startedInterracting = false
 
   @menu.Getter isMenuOpened
   @menu.Getter isMenuFloating
+  @menu.Getter isMenuAnimating
   @menu.Action openMenu
   @menu.Action notifyFloat
+  @menu.Action notifyAnimating
 
   @Watch('isMenuOpened')
   onMenu(openned) {
@@ -43,11 +46,13 @@ export default class SmWrapper extends Vue {
       this.lastX = x
       this.startX = x
       this.startTime = Date.now()
+      this.startedInterracting = true
     }
   }
 
   onTouchMove({ touches: [{ pageX: x }] }) {
     if (this.isMenuFloating) {
+      if (!this.isMenuAnimating) this.notifyAnimating(true)
       const deltaX = x - this.lastX
       const menuWidth = this.$refs.menu.offsetWidth
       this.menuOffset += (deltaX / menuWidth) * 100
@@ -57,16 +62,25 @@ export default class SmWrapper extends Vue {
   }
 
   onTouchEnd() {
+    let shallWait = false
     if (this.isMenuFloating) {
       const velocity = (this.lastX - this.startX) / (Date.now() - this.startTime)
+      shallWait = isSwiping(velocity)
       if (isSwipingLeft(velocity) && this.isMenuOpened) this.openMenu(false)
       else if (isSwipingRight(velocity) && !this.isMenuOpened) this.openMenu(true)
       else {
         const open = this.menuOffset > -50;
         (open === this.isMenuOpened ? this.onMenu : this.openMenu)(open)
+        shallWait = true
       }
     }
-    this.notifyFloat(false)
+    if (this.startedInterracting) {
+      this.notifyFloat(false)
+      const notify = () => this.notifyAnimating(false)
+      if (shallWait) setTimeout(notify, 250)
+      else notify()
+      this.startedInterracting = false
+    }
   }
 
   registerEvents(val) {

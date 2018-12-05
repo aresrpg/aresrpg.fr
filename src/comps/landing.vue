@@ -8,8 +8,8 @@ fr:
 
 <template lang="pug">
   - var trailer = "@rs/trailer"
-  mixin helmet(clazz)
-    img(:class=[clazz, "{'anim':animateLogo}"] src="@rs/logo.png" alt="AresRPG logo")
+  - var logo = "@rs/logo.png"
+  - var alt = "AresRPG logo"
   
   mixin srcType(type)
     source(src=`${trailer}.${type}` type=`video/${type}`)
@@ -19,8 +19,8 @@ fr:
       video(poster="@rs/snow-background.jpg" preload autoplay muted loop)
         +srcType('webm')
         +srcType('mp4')
-    +helmet('logo')
-    +helmet('fake')
+    img.logo(:class="{'anim':!isMenuAnimating}" src=logo alt=alt)
+    img.fake(:class="{'anim':!isMenuAnimating}" src=logo alt=alt)
     .glassed
     p.
       #[span.under(v-t="'under'")] #[span.construct(v-t="'construct'")]
@@ -28,10 +28,13 @@ fr:
 
 <script>
 import { Vue, Component } from 'vue-property-decorator'
+import { Getter, namespace } from 'vuex-class'
+
+const menu = namespace('menu')
 
 @Component
 export default class Landing extends Vue {
-  animateLogo = true
+  @menu.Getter isMenuAnimating
 
   mounted() {
     this.onMenuOpenned = open => (this.animateLogo = !open)
