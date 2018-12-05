@@ -22,8 +22,8 @@ fr:
     img.logo(:class="{'anim':!isMenuAnimating}" src=logo alt=alt)
     img.fake(:class="{'anim':!isMenuAnimating}" src=logo alt=alt)
     .glassed
-    p.
-      #[span.under(v-t="'under'")] #[span.construct(v-t="'construct'")]
+      p.
+        #[span.under(v-t="'under'")] #[span.construct(v-t="'construct'")]
 </template>
 
 <script>
@@ -93,9 +93,10 @@ export default class Landing extends Vue {
         flex-flow column nowrap
         text-align end
         font-size 10vmin
+        width 100%
         text-transform uppercase
         text-shadow 0 0 10px black
-        padding 1em 50%
+        padding 1em .5em
         backdrop-filter blur(3px)
 
         @supports not (backdrop-filter: blur(3px))
@@ -103,11 +104,11 @@ export default class Landing extends Vue {
           border 1px solid rgba(#2c3e50, .8)
 
         .under
-          smFont(2)
+          font-weight 800
           color #f0a30a
 
         .construct
-          smFont(1)
+          font-weight 400
           color silver
 
 @keyframes logo

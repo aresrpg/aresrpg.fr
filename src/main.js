@@ -13,24 +13,28 @@ import i18n from '@core/i18n'
 import '@core/misc/scrollFire' // init
 import 'aos/dist/aos.css'
 
+console.log('%c Aresrpg', 'color: #FF8F00;font-weight:bold;font-size:30px;')
+console.log("%c Don't bother, we are open-source!", 'color: #FF8F00;font-size:18px;')
+console.log('%c https://github.com/HydreIO/aresrpg.com', 'font-size:15px;')
+
 Vue.config.productionTip = false
 
 Vue.directive('rp', Ripple)
 Vue.component('fa', Icons)
 Vue.use(VueMq, {
-  breakpoints: {
-    sm: 813, // iphoneX max
-    lg: Infinity,
-  },
+	breakpoints: {
+		sm: 813, // iphoneX max
+		lg: Infinity,
+	},
 })
 
 aos.init({
-  offset: 200,
-  duration: 1000,
-  easing: 'ease-in-sine',
-  delay: 100,
-  disable: () => window.innerWidth < 814,
-  anchorPlacement: 'top-bottom'
+	offset: 200,
+	duration: 1000,
+	easing: 'ease-in-sine',
+	delay: 100,
+	disable: () => window.innerWidth < 814,
+	anchorPlacement: 'top-bottom',
 })
 
 new Vue({
@@ -47,7 +51,7 @@ new Vue({
 			animationTime: 700,
 			accelerationDelta: 30,
 			accelerationMax: 3,
-		  })
+		})
 	},
 	render: h => h(App),
 }).$mount('#app')
