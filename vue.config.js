@@ -1,11 +1,8 @@
 const path = require('path')
 
 const aliases = {
-	sc: 'src/lib_temp',
-	sc_stl: 'src/lib_temp/stylus',
-	sc_cmp: 'src/lib_temp/comps',
 	cmp: 'src/comps',
-	stl: 'src/stylus',
+	stl: 'src/styles',
 	v: 'src/views',
 	core: 'src/core',
 	rs: 'src/assets/resources',
@@ -23,5 +20,33 @@ module.exports = {
 	chainWebpack: config => {
 		registerAliases(aliases, config)
 		svgLoader(config)
+		config.module
+			.rule('i18n')
+			.resourceQuery(/blockType=i18n/)
+			.type('javascript/auto')
+			.use('i18n')
+			.loader('@kazupon/vue-i18n-loader')
+			.end()
+			.use('yaml')
+			.loader('yaml-loader')
+			.end()
+	},
+	pwa: {
+		workboxPluginMode: 'InjectManifest',
+		workboxOptions: {
+			swSrc: './src/sw.js',
+		},
+		themeColor: '#01579B',
+		appleMobileWebAppCapable: 'yes',
+		iconPaths: {
+			favicon32: 'img/icons/favicon-32x32.png',
+			favicon16: 'img/icons/favicon-16x16.png',
+			appleTouchIcon: 'img/icons/apple-touch-icon.png',
+			maskIcon: 'img/icons/safari-pinned-tab.svg',
+			msTileImage: '/img/icons/mstile-150x150.png',
+		},
+	},
+	devServer: {
+		disableHostCheck: true,
 	},
 }
