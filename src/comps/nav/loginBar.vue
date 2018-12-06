@@ -10,13 +10,13 @@ fr:
 <template lang="pug">
     .login
         .container(ref="container" :class='$mq' :style="`transform: translateY(${-offset}px)`")
-            .o-reveal(v-rp)
+            .login(v-rp)
                 fa(fas="sign-in-alt" v-show="$mq==='lg'")
-                .icon(@click="openMenu")
+                .icon(@click="openMenu" v-if="$mq==='sm'")
                     fa(fas="bars")
                     .divider
                 span(@click="showM()" v-t="'log'")
-            .o-reveal(@click="showM()" v-rp)
+            .register(@click="showM()" v-rp)
                 span(v-t="'reg'")
 </template>
 
@@ -63,12 +63,11 @@ export default class LoginBar extends Vue {
 }
 </script>
 
-
 <style lang="stylus" scoped>
 @require '~@stl/material'
 
 .container
-  material(2)
+  // material(2)
 
   &.sm
     smFont(2)
@@ -124,42 +123,37 @@ export default class LoginBar extends Vue {
       border-left .6em solid #2c3e50
 
   &.lg
-    font-family $lg
-    font-size 1.2rem
+    font-size .9rem
     text-transform uppercase
     color lighten(#f0a30a, 20%)
-    background url('~@rs/loggedbar.png')
     width 100%
     height 100%
     display flex
     flex-flow row nowrap
     justify-content flex-end
+    align-items center
+    position fixed
+    width 100%
+    height 30px
+    z-index 1
 
     i
-      font-size .8em
       color rgba(lighten(#f0a30a, 20%), .5)
+      padding-right 10px
 
     >div
-      padding .6em 1em
-      text-align center
-
-      &:hover
-        text-shadow 0px 0px 6px rgba(255, 255, 255, .2)
-        cursor pointer
-
-    // over animation
-    .o-reveal
-      display inline-block
-      vertical-align middle
       transform perspective(1px) translateZ(0)
       box-shadow 0 0 1px rgba(0, 0, 0, 0)
       position relative
       overflow hidden
+      padding .6em 1em
+      text-align center
 
       &:hover
         transition-duration 300ms
-        background-color darken(#2c3e50, 20%)
         color #f0a30a
+        text-shadow 0px 0px 6px rgba(255, 255, 255, .2)
+        cursor pointer
 
       &:before
         content ''

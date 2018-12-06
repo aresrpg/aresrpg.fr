@@ -91,7 +91,7 @@ export default class MenuContent extends Vue {
   width 100%
   height 100%
   background #f0a30a
-  background url('~@rs/triangles.png') no-repeat
+  background url('~@rs/triangles.jpg') no-repeat
   background-size cover
   position relative
   display flex
@@ -148,7 +148,6 @@ export default class MenuContent extends Vue {
             smFont(1)
             font-size 1.5em
             align-self end
-            // padding-top .2em
 
           &>:nth-child(3)
             grid-area caption

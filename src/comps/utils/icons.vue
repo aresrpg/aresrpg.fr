@@ -6,7 +6,7 @@
 
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTimes, faFrog, faSignInAlt, faBars, faShieldAlt, faUserAstronaut, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faAngleUp, faFrog, faSignInAlt, faBars, faShieldAlt, faUserAstronaut, faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons'
 import { faTwitterSquare, faGithubSquare, faYoutubeSquare } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -23,7 +23,8 @@ library.add(
   faFrog,
   faTwitterSquare,
   faGithubSquare,
-  faYoutubeSquare
+  faYoutubeSquare,
+  faAngleUp
 )
 
 @Component({

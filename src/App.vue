@@ -6,10 +6,12 @@
 
 <script>
 import { Vue, Component } from 'vue-property-decorator'
+import 'vue2-scrollbar/dist/style/vue2-scrollbar.css'
 
 @Component({
   components: {
-    utils: () => import('@cmp/utils/index.vue')
+    utils: () => import('@cmp/utils/index.vue'),
+    scrollBar: () => import('vue2-scrollbar')
   }
 })
 export default class App extends Vue { }
@@ -17,7 +19,7 @@ export default class App extends Vue { }
 
 <style lang="stylus">
 @require '~@stl/utils'
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800')
+@import url('https://fonts.googleapis.com/css?family=Assistant:200,400,600,800')
 
 :root
   font-size 18px
@@ -25,7 +27,7 @@ export default class App extends Vue { }
 *
   sc-reset()
   sc-disableScollBar()
-  font-family 'Open Sans', sans-serif
+  font-family 'Assistant', sans-serif
   outline none
   scroll-behavior smooth
 

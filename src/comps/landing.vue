@@ -2,6 +2,9 @@
 en:
   under: "under"
   construct: "construction"
+  title: "AresRpg"
+  desc: "We are"
+  alternate: "a MMORPG minecraft server"
 fr:
   under: "en"
 </i18n>
@@ -14,16 +17,20 @@ fr:
   mixin srcType(type)
     source(src=`${trailer}.${type}` type=`video/${type}`)
     
-  .container(:class="$mq")
-    div.video-container(v-if="$mq === 'lg'")
-      video(poster="@rs/snow-background.jpg" preload autoplay muted loop)
-        +srcType('webm')
-        +srcType('mp4')
+  .container.sm(v-if="$mq==='sm'")
     img.logo(:class="{'anim':!isMenuAnimating}" src=logo alt=alt)
     img.fake(:class="{'anim':!isMenuAnimating}" src=logo alt=alt)
     .glassed
       p.
         #[span.under(v-t="'under'")] #[span.construct(v-t="'construct'")]
+  .container.lg(v-else)
+      video(poster="@rs/snow-background.jpg" preload autoplay muted loop)
+        +srcType('webm')
+        +srcType('mp4')
+      img.logo(src=logo alt=alt)
+      .text
+        h1(v-t="'title'")
+        h2(v-t="'desc'")
 </template>
 
 <script>
@@ -47,6 +54,39 @@ export default class Landing extends Vue {
 @require '~@stl/material'
 
 .container
+  &.lg
+    position relative
+    width 100%
+    height 100vh
+    display flex
+    flex-flow column nowrap
+    justify-content center
+    align-items center
+
+    &::after
+      content ''
+      position absolute
+      width 100%
+      height @width
+      top 0
+      left 0
+      background url('~@rs/loggedbar.png'), rgba(#212121, .3)
+
+    video
+      width 100%
+      height 100%
+      object-fit cover
+      position absolute
+      top 0
+      left 0
+
+    img
+      mix-blend-mode color-dodge
+      transform scale(1.5)
+    .text
+      position relative
+      width 100%
+
   &.sm
     width 100%
     height 100vh
