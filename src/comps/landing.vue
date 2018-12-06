@@ -29,8 +29,8 @@ fr:
         +srcType('mp4')
       img.logo(src=logo alt=alt)
       .text
-        h1(v-t="'title'")
-        h2(v-t="'desc'")
+        //- h1(v-t="'title'")
+        //- h2(v-t="'desc'")
 </template>
 
 <script>
