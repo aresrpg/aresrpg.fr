@@ -62,6 +62,7 @@ export default class Landing extends Vue {
     flex-flow column nowrap
     justify-content center
     align-items center
+    overflow hidden
 
     &::after
       content ''
