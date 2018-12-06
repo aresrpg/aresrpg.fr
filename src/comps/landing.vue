@@ -72,6 +72,7 @@ export default class Landing extends Vue {
       top 0
       left 0
       background url('~@rs/loggedbar.png'), rgba(#212121, .3)
+      z-index 1
 
     video
       width 100%
@@ -80,10 +81,13 @@ export default class Landing extends Vue {
       position absolute
       top 0
       left 0
+      z-index 0
 
     img
       mix-blend-mode color-dodge
       transform scale(1.5)
+      position relative
+      z-index 2
     .text
       position relative
       width 100%
