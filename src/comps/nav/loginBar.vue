@@ -135,7 +135,7 @@ export default class LoginBar extends Vue {
     position fixed
     width 100%
     height 30px
-    z-index 1
+    z-index 3
 
     i
       color rgba(lighten(#f0a30a, 20%), .5)
