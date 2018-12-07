@@ -112,7 +112,8 @@ export default class Landing extends Vue {
         span
           font-size 3em
           text-transform uppercase
-          text-shadow 0 0 10px black
+          // text-shadow 0 0 10px black
+          opacity .7
           z-index 4
 
         span:first-of-type

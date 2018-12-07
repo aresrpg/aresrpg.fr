@@ -27,6 +27,7 @@ export default class LangSelect extends Vue {
   position fixed
   top 50%
   z-index 99
+  opacity .6
   transform rotate(-90deg) translateY(-25px)
 
   .sep
