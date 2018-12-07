@@ -67,10 +67,10 @@ export default class LoginBar extends Vue {
 @require '~@stl/material'
 
 .container
-  // material(2)
 
   &.sm
     smFont(2)
+    material(2)
     font-size .9rem
     text-transform uppercase
     text-shadow 0px 2px 3px rgba(0, 0, 0, .4), 0px 8px 13px rgba(0, 0, 0, .1), 0px 18px 23px rgba(0, 0, 0, .1)
@@ -134,7 +134,7 @@ export default class LoginBar extends Vue {
     align-items center
     position fixed
     width 100%
-    height 30px
+    height 40px
     z-index 3
 
     i
@@ -142,7 +142,6 @@ export default class LoginBar extends Vue {
       padding-right 10px
 
     >div
-      transform perspective(1px) translateZ(0)
       box-shadow 0 0 1px rgba(0, 0, 0, 0)
       position relative
       overflow hidden
@@ -158,17 +157,14 @@ export default class LoginBar extends Vue {
       &:before
         content ''
         position absolute
-        z-index -1
+        z-index 1
         left 0
-        right 0
         top 0
         background #f0a30a
-        height 4px
-        transform translateY(-4px)
-        transition-property transform
-        transition-duration .3s
-        transition-timing-function ease-out
+        width 100%
+        height 7px
+        transition height 300ms ease-out
 
       &:hover:before, &:focus:before, &:active:before
-        transform translateY(0)
+        height 0
 </style>

@@ -2,11 +2,12 @@
 en:
   under: "under"
   construct: "construction"
-  title: "AresRpg"
-  desc: "We are"
-  alternate: "a MMORPG minecraft server"
+  desc: "The lands of Aresrpg"
+  subdesc: "Explore, fight, survive and become the most powerful warrior"
 fr:
   under: "en"
+  desc: "Les terres d'Aresrpg"
+  subdesc: "Explore, combat, survit et deviens le plus puissant guerrier"
 </i18n>
 
 <template lang="pug">
@@ -27,10 +28,14 @@ fr:
       video(poster="@rs/snow-background.jpg" preload autoplay muted loop)
         +srcType('webm')
         +srcType('mp4')
-      img.logo(src=logo alt=alt)
+      .middle
+        img.logo(src=logo alt=alt)
+        .box
+          span(v-t="'under'")
+          span(v-t="'construct'")
       .text
-        //- h1(v-t="'title'")
-        //- h2(v-t="'desc'")
+        h1(v-t="'desc'")
+        p(v-t="'subdesc'")
 </template>
 
 <script>
@@ -42,6 +47,7 @@ const menu = namespace('menu')
 @Component
 export default class Landing extends Vue {
   @menu.Getter isMenuAnimating
+
 
   mounted() {
     this.onMenuOpenned = open => (this.animateLogo = !open)
@@ -83,14 +89,62 @@ export default class Landing extends Vue {
       left 0
       z-index 0
 
-    img
-      mix-blend-mode color-dodge
-      transform scale(1.5)
+    .middle
+      width 100%
+      height 70%
+      display flex
+      flex-flow row nowrap
+      justify-content center
+      align-items center
       position relative
-      z-index 2
+      display grid
+      grid '. logo box' 1fr / 1fr max-content 1fr
+      place-items center center
+      padding-bottom 20vh
+
+      .box
+        display flex
+        flex-flow column nowrap
+        justify-content center
+        text-align end
+        grid-area box
+
+        span
+          font-size 3em
+          text-transform uppercase
+          text-shadow 0 0 10px black
+          z-index 4
+
+        span:first-of-type
+          color #EEE
+          font-weight 800
+
+        span:last-of-type
+          color #f0a30a
+          font-weight 200
+
+      img
+        mix-blend-mode color-dodge
+        position relative
+        z-index 2
+        grid-area logo
+        animation grow 20s ease-in-out infinite alternate
+
     .text
       position relative
       width 100%
+      padding 0 4em
+      z-index 5
+      opacity .7
+      h1
+        font-size 3em
+        font-weight 200
+        color white
+      p
+        color #EEE
+        font-size 1.2em
+        padding-left 2em
+        font-weight 400
 
   &.sm
     width 100%
@@ -162,6 +216,39 @@ export default class Landing extends Vue {
 
   to
     opacity 0
+
+@keyframes grow
+  0%
+    transform scale(1.5)
+    filter grayscale(1) blur(10px)
+
+  10%
+    transform scale(1.7)
+    filter grayscale(1) blur(3px)
+
+  15%
+    transform scale(1.5)
+    filter grayscale(0) blur(10px) brightness(.5)
+
+  20%
+    transform scale(1.8)
+    filter grayscale(1) blur(5px)
+
+  40%
+    transform scale(1.5)
+    filter grayscale(1) blur(2px)
+
+  75%
+    transform scale(2)
+    filter grayscale(.2) blur(2px)
+
+  80%
+    transform scale(2)
+    filter grayscale(1) blur(5px)
+
+  100%
+    transform scale(2)
+    filter grayscale(1) blur(1px)
 
 @keyframes float
   from
