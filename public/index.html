@@ -34,10 +34,35 @@
 		<meta name="msapplication-TileColor" content="#ffc40d" />
 		<meta name="msapplication-TileImage" content="<%= BASE_URL %>img/icons/mstile-150x150.png" />
 		<meta name="theme-color" content="#2c3e50" />
+
+		<script type="text/javascript">
+			var _paq = _paq || []
+			/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+			_paq.push(['trackPageView'])
+			_paq.push(['enableLinkTracking'])
+			_paq.push(['enableHeartBeatTimer'])
+			;(function() {
+				var u = '//stats.unixfox.eu/analyses/'
+				_paq.push(['setTrackerUrl', u + 'php'])
+				_paq.push(['setSiteId', '2'])
+				var d = document,
+					g = d.createElement('script'),
+					s = d.getElementsByTagName('script')[0]
+				g.type = 'text/javascript'
+				g.async = true
+				g.defer = true
+				g.src = u + 'js'
+				s.parentNode.insertBefore(g, s)
+			})()
+		</script>
 	</head>
 
 	<body>
-		<noscript> <strong>This website doesn't work properly without JavaScript enabled. Please enable it to continue.</strong> </noscript>
+		<noscript>
+			<strong>This website doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+			<img src="//stats.unixfox.eu/analyses/php?idsite=2&rec=1" style="border:0;" alt="" />
+		</noscript>
+
 		<div id="app"></div>
 	</body>
 </html>
