@@ -3,11 +3,13 @@ en:
   under: "under"
   construct: "construction"
   desc: "The lands of Aresrpg"
-  subdesc: "Explore, fight, survive and become the most powerful warrior"
+  subdescA: "A delightful mmorpg experience in minecraft !"
+  subdescB: "Explore, fight, survive and become the most powerful warrior"
 fr:
   under: "en"
   desc: "Les terres d'Aresrpg"
-  subdesc: "Explore, combat, survit et deviens le plus puissant guerrier"
+  subdescA: "Une expérience mmorpg inédite sur minecraft !"
+  subdescB: "Explore, combat, survit et deviens le plus puissant guerrier"
 </i18n>
 
 <template lang="pug">
@@ -35,7 +37,8 @@ fr:
           span(v-t="'construct'")
       .text
         h1(v-t="'desc'")
-        p(v-t="'subdesc'")
+        p(v-t="'subdescA'")
+        p(v-t="'subdescB'")
 </template>
 
 <script>
@@ -137,15 +140,21 @@ export default class Landing extends Vue {
       padding 0 4em
       z-index 5
       opacity .7
+
       h1
         font-size 3em
         font-weight 200
         color white
+        padding-bottom .2em
+
       p
         color #EEE
         font-size 1.2em
         padding-left 2em
         font-weight 400
+
+      p:last-of-type
+        padding-left 3em
 
   &.sm
     width 100%
