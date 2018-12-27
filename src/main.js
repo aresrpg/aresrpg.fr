@@ -15,7 +15,7 @@ import 'aos/dist/aos.css'
 
 console.log('%c Aresrpg', 'color: #FF8F00;font-weight:bold;font-size:30px;')
 console.log("%c Don't bother, we are open-source!", 'color: #FF8F00;font-size:18px;')
-console.log('%c https://github.com/HydreIO/aresrpg.com', 'font-size:15px;')
+console.log('%c https://github.com/AresRPG/aresrpg.com', 'font-size:15px;')
 
 Vue.config.productionTip = false
 
