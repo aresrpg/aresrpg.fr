@@ -1,9 +1,18 @@
+<i18n>
+en:
+  not: "The page was not found\xa0!"
+  home: "Return home"
+fr:
+  not: "La page est introuvable\xa0!"
+  home: "Retourner à l'acceuil"
+</i18n>
+
 <template lang="pug">
     .container(:class="$mq")
-        h1(:class="$mq" ref="smile" :style="`transform: translate(${deltaX}px,${deltaY}px) rotate(60deg)`") :(
-        span 404
-        p The page was not found&nbsp!
-        router-link.link(:to="'/'" :class="$mq") Return Home
+        h1(:class="$mq" ref="smile" :style="style") :(
+        span 404 
+        p(v-t="'not'")
+        router-link.link(:to="'/'" :class="$mq" v-t="'home'")
 </template>
 
 <script>
