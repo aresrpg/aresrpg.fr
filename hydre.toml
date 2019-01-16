@@ -1,0 +1,42 @@
+themeColor = '#2c3e50'
+ogImage = 'https://aresrpg.fr/img/og/og-image.jpg'
+touchIconSize = '180x180'
+maskIconColor = '#c0392b'
+tileColor = '#2d89ef'
+
+[en]
+title = 'The Minecraft MMORPG'
+titleTemplate = '''t => t ? `AresRPG | ${t}` : 'AresRPG' '''
+description = ''
+ogTitle = 'The Minecraft MMORPG'
+ogTemplate = '''t => `${t} - AresRPG.com`'''
+
+[fr]
+title = 'Le MMORPG Minecraft'
+titleTemplate = '''t => t ? `AresRPG | ${t}` : 'AresRPG' '''
+description = ''
+ogTitle = 'Le MMORPG Minecraft'
+ogTemplate = '''t => `${t} - AresRPG.com`'''
+
+[[og]]
+property = 'og:image:width'
+content = '1200'
+[[og]]
+property = 'og:image:height'
+content = '600'
+[[og]]
+property = 'og:url'
+content = 'https://aresrpg.fr'
+
+[[tw]]
+name = 'twitter:site'
+content = '@AresRPG'
+[[tw]]
+name = 'twitter:card'
+content = 'summary_large_image'
+[[tw]]
+name = 'twitter:title'
+content = 'AresRPG.com'
+[[tw]]
+name = 'twitter:creator'
+content = '@hydreio'
