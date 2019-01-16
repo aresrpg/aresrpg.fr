@@ -15,7 +15,7 @@ ogTemplate = '''t => `${t} - AresRPG.com`'''
 [fr]
 title = 'Le MMORPG Minecraft'
 titleTemplate = '''t => t ? `AresRPG | ${t}` : 'AresRPG' '''
-description = ''
+description = 'Démarre ton aventure des maintenant et rejoins des milliers de joueurs dans un monde immersif ! Combat pour ta vie et devient le plus puissant aventurier'
 ogTitle = 'Le MMORPG Minecraft'
 ogTemplate = '''t => `${t} - AresRPG.com`'''
 
