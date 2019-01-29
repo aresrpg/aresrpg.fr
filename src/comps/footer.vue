@@ -8,15 +8,15 @@ fr:
 <template lang="pug">
     footer
         .socials
-            a(href="https://twitter.com/AresRPG" target="_blank" rel="noopener noreferrer")
+            a(href="https://twitter.com/AresRPG" target="_blank" rel="noopener noreferrer" aria-label="Twitter")
                 fa(fab="twitter-square" size="3x")
-            a(href="https://www.youtube.com/user/MrSceat" target="_blank" rel="noopener noreferrer")
+            a(href="https://www.youtube.com/user/MrSceat" target="_blank" rel="noopener noreferrer" aria-label="Youtube")
                 fa(fab="youtube-square" size="3x")
-            a(href="https://github.com/HydreIO/aresrpg.com" target="_blank" rel="noopener noreferrer")
+            a(href="https://github.com/HydreIO/aresrpg.com" target="_blank" rel="noopener noreferrer" aria-label="Github")
                 fa(fab="github-square" size="3x")
         .bottom
             i18n(path="credits")
-                a(place="link" href="https://hydre.io" target="_blank" rel="noopener noreferrer").
+                a(place="link" href="https://hydre.io" target="_blank" rel="noopener noreferrer" aria-label="Hydre website").
                     Hydre #[sub io]
 </template>
 

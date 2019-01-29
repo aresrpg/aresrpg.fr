@@ -10,7 +10,7 @@ fr:
           .container
               fa(fas="frog" size="lg")
               i18n.lang(path="text")
-                  a(href="https://twitter.com/AresRPG" target="_blank" rel="noopener noreferrer" place="link") @Aresrpg
+                  a(href="https://twitter.com/AresRPG" target="_blank" rel="noopener noreferrer" place="link" aria-label="Twitter") @Aresrpg
                   span(place="twitter") twitter
 </template>
 
