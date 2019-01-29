@@ -12,7 +12,7 @@ fr:
         h1(:class="$mq" ref="smile" :style="style") :(
         span 404 
         p(v-t="'not'")
-        router-link.link(:to="'/'" :class="$mq" v-t="'home'")
+        router-link.link(:to="'/'" :class="$mq" v-t="'home'" aria-label="Home")
 </template>
 
 <script>
