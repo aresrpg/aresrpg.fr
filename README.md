@@ -1,26 +1,7 @@
-# TEMPLATE
+# ARESRPG.COM [![Netlify Status](https://api.netlify.com/api/v1/badges/f2c76454-b0de-4308-b250-abe738be1af4/deploy-status)](https://app.netlify.com/sites/aresrpg/deploys)
 
-## Project setup
+## Test it yourself
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
 ```
