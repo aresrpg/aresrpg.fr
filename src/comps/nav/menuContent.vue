@@ -153,7 +153,7 @@ export default class MenuContent extends Vue {
             grid-area caption
             smFont(2)
             font-size .8em
-            align-self start
+            align-self flex-start
             text-transform initial
 
         .discover

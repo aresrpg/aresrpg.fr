@@ -194,7 +194,7 @@ export default class Landing extends Vue {
       height 50%
       display flex
       flex-flow column nowrap
-      justify-content start
+      justify-content flex-start
       align-items center
 
       p
