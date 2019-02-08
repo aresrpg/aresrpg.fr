@@ -54,11 +54,11 @@ export default class LoginBar extends Vue {
 
   mounted() {
     this.lastY = window.pageYOffset
-    window.addEventListener('scroll', this.onScroll)
+		window.addEventListener('scroll', this.onScroll,{passive: true})
   }
 
   beforeDestroy() {
-    window.removeEventListener('scroll', this.onScroll)
+    window.removeEventListener('scroll', this.onScroll,{passive: true})
   }
 }
 </script>
