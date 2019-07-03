@@ -67,13 +67,12 @@ async function genHtml(conf) {
 
 		<script type="text/javascript">
 			var _paq = _paq || []
-			/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
 			_paq.push(['trackPageView'])
 			_paq.push(['enableLinkTracking'])
 			_paq.push(['enableHeartBeatTimer'])
 			;(function() {
-				var u = '//stats.unixfox.eu/analyses/'
-				_paq.push(['setTrackerUrl', u + 'php'])
+				var u = 'https://analyses.aresrpg.fr/'
+				_paq.push(['setTrackerUrl', u])
 				_paq.push(['setSiteId', '2'])
 				var d = document,
 					g = d.createElement('script'),
@@ -81,7 +80,7 @@ async function genHtml(conf) {
 				g.type = 'text/javascript'
 				g.async = true
 				g.defer = true
-				g.src = u + 'js'
+				g.src = u
 				s.parentNode.insertBefore(g, s)
 			})()
 		</script>
@@ -90,7 +89,7 @@ async function genHtml(conf) {
 	<body>
 		<noscript>
 			<strong>This website doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-			<p><img src="//stats.unixfox.eu/analyses/php?idsite=2&rec=1" style="border:0;" alt="" /></p>
+			<p><img src="https://analyses.aresrpg.fr/?idsite=2&amp;rec=1" style="border:0;" alt="" /></p>
 		</noscript>
 		<div id="app"></div>
 	</body>
